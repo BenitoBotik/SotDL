@@ -23,7 +23,7 @@ public class ChatsPage extends AppCompatActivity {
 
         ArrayList<Chat> chats = new ArrayList<>();
         for (int  i = 0; i < 20; i++){
-            chats.add(new Chat( "Group" + i, "what's up?", "04:20", "4", "group_icon"));
+            chats.add(new Chat( "Group" + i, "what's up dude?", "04:20", "4", "group_icon"));
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycleview_chat);
