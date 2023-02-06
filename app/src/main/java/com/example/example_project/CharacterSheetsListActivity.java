@@ -44,8 +44,8 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_chats:
-                Intent intent = new Intent(CharacterSheetsListActivity.this, ChatsPage.class);
+            case R.id.menu_game:
+                Intent intent = new Intent(CharacterSheetsListActivity.this, GamePage.class);
                 startActivity(intent);
                 break;
 

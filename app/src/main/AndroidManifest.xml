@@ -20,7 +20,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ChatsPage"
+            android:name=".GamePage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

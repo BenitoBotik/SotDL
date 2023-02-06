@@ -8,8 +8,8 @@
         android:title="Home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_chats"
-        android:title="Chats" />
+        android:id="@+id/menu_game"
+        android:title="Game" />
     <item
         android:id="@+id/menu_characters"
         android:title="Character Sheets" />

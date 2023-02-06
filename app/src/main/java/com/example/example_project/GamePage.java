@@ -14,24 +14,24 @@ import com.example.example_project.ui.login.LoginActivity;
 
 import java.util.ArrayList;
 
-public class ChatsPage extends AppCompatActivity {
+public class GamePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chats_page);
+        setContentView(R.layout.activity_game_page);
 
-        ArrayList<Chat> chats = new ArrayList<>();
+        ArrayList<Game> games = new ArrayList<>();
         for (int  i = 0; i < 20; i++){
-            chats.add(new Chat( "Group" + i, "what's up dude?", "04:20", "4", "group_icon"));
+            games.add(new Game( "Group" + i, "what's up dude?", "04:20", "4", "group_icon"));
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycleview_chat);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        ChatAdapter chatAdapter = new ChatAdapter(chats);
-        recyclerView.setAdapter(chatAdapter);
+        GameAdapter gameAdapter = new GameAdapter(games);
+        recyclerView.setAdapter(gameAdapter);
     }
 
     @Override
@@ -45,17 +45,17 @@ public class ChatsPage extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_home:
-                Intent intent = new Intent(ChatsPage.this, MainPage.class);
+                Intent intent = new Intent(GamePage.this, MainPage.class);
                 startActivity(intent);
                 break;
 
             case R.id.menu_logout:
-                Intent intent1 = new Intent(ChatsPage.this, LoginActivity.class);
+                Intent intent1 = new Intent(GamePage.this, LoginActivity.class);
                 startActivity(intent1);
                 break;
 
             case R.id.menu_characters:
-                Intent intent2 = new Intent(ChatsPage.this, CharacterSheetsListActivity.class);
+                Intent intent2 = new Intent(GamePage.this, CharacterSheetsListActivity.class);
                 startActivity(intent2);
                 break;
         }

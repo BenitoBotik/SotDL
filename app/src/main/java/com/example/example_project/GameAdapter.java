@@ -11,34 +11,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder> {
 
-    private ArrayList<Chat> chats;
+    private ArrayList<Game> games;
 
-    public ChatAdapter(ArrayList<Chat> chats) {
-        this.chats = chats;
+    public GameAdapter(ArrayList<Game> games) {
+        this.games = games;
     }
 
     @NonNull
     @Override
     public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_chat, parent, false);
+        View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_game, parent, false);
         return new ChatViewHolder(chatView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        Chat currentChat = chats.get(position);
-        holder.nameTextView.setText(currentChat.getName());
-        holder.messageTextView.setText(currentChat.getMessage());
-        holder.timeTextView.setText(currentChat.getTime());
-        holder.unreadTextView.setText(currentChat.getUnread());
-        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentChat.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
+        Game currentGame = games.get(position);
+        holder.nameTextView.setText(currentGame.getName());
+        holder.messageTextView.setText(currentGame.getMessage());
+        holder.timeTextView.setText(currentGame.getTime());
+        holder.unreadTextView.setText(currentGame.getUnread());
+        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentGame.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
     }
 
     @Override
     public int getItemCount() {
-        return chats.size();
+        return games.size();
     }
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder{

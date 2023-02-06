@@ -1,13 +1,13 @@
 package com.example.example_project;
 
-public class Chat {
+public class Game {
     private String name;
     private String message;
     private String time;
     private String unread;
     private String icon;
 
-    public Chat(String name, String message, String timr, String unread, String icon) {
+    public Game(String name, String message, String timr, String unread, String icon) {
         this.name = name;
         this.message = message;
         this.time = timr;
