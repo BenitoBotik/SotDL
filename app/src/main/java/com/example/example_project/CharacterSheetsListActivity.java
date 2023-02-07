@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.example_project.ui.login.LoginActivity;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 public class CharacterSheetsListActivity extends AppCompatActivity {
 
+    ImageView addButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,8 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++){
             characterSheets.add(new CharacterSheet("Name" + i, "Group" + i, "4", "icon" + (i%6)));
         }
+        
+        Assaign();
 
         RecyclerView recyclerView = findViewById(R.id.recycleview_charactersheets);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -32,6 +37,10 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
 
         CharacterSheetAdapter characterSheetAdapter = new CharacterSheetAdapter(characterSheets);
         recyclerView.setAdapter(characterSheetAdapter);
+    }
+
+    private void Assaign() {
+        addButton = findViewById(R.id.imageview_add_button);
     }
 
     @Override
@@ -60,5 +69,10 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void press(View view) {
+        Intent intent = new Intent(CharacterSheetsListActivity.this, CharacterSheetCreationActivity.class);
+        startActivity(intent);
     }
 }
