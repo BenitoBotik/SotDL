@@ -22,7 +22,7 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_character_sheets_list);
 
         ArrayList<CharacterSheet> characterSheets = new ArrayList<>();
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 20; i++){
             characterSheets.add(new CharacterSheet("Name" + i, "Group" + i, "4", "icon" + (i%6)));
         }
 
