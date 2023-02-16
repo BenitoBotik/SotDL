@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAdapter.CharacterSheetViewHolder> {
-    private ArrayList<CharacterSheet> characterSheets;
+    private ArrayList<Character> characters;
 
-    public CharacterSheetAdapter(ArrayList<CharacterSheet> characterSheets) {
-        this.characterSheets = characterSheets;
+    public CharacterSheetAdapter(ArrayList<Character> characters) {
+        this.characters = characters;
     }
 
     @NonNull
@@ -27,16 +27,16 @@ public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAd
 
     @Override
     public void onBindViewHolder(@NonNull CharacterSheetViewHolder holder, int position) {
-        CharacterSheet currentCharacterSheet = characterSheets.get(position);
-        holder.nameTextView.setText(currentCharacterSheet.getName());
-        holder.groupTextView.setText(currentCharacterSheet.getGroup());
-        holder.levelTextView.setText(currentCharacterSheet.getLevel());
-        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacterSheet.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
+        Character currentCharacter = characters.get(position);
+        holder.nameTextView.setText(currentCharacter.getName());
+        holder.groupTextView.setText(currentCharacter.getGroup());
+        holder.levelTextView.setText(currentCharacter.getLevel());
+        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacter.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
     }
 
     @Override
     public int getItemCount() {
-        return characterSheets.size();
+        return characters.size();
     }
 
     public static class CharacterSheetViewHolder extends RecyclerView.ViewHolder {

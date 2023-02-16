@@ -39,7 +39,7 @@ public class MainPage extends AppCompatActivity {
                 break;
 
             case R.id.menu_characters:
-                Intent intent2 = new Intent(MainPage.this, CharacterSheetsListActivity.class);
+                Intent intent2 = new Intent(MainPage.this, CharactersListActivity.class);
                 startActivity(intent2);
                 break;
         }

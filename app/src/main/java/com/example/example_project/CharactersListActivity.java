@@ -16,7 +16,7 @@ import com.example.example_project.ui.login.LoginActivity;
 
 import java.util.ArrayList;
 
-public class CharacterSheetsListActivity extends AppCompatActivity {
+public class CharactersListActivity extends AppCompatActivity {
 
     ImageView addButton;
     @Override
@@ -24,9 +24,9 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_sheets_list);
 
-        ArrayList<CharacterSheet> characterSheets = new ArrayList<>();
+        ArrayList<Character> characters = new ArrayList<>();
         for (int i = 0; i < 20; i++){
-            characterSheets.add(new CharacterSheet("Name" + i, "Group" + i, "4", "icon" + (i%6)));
+            characters.add(new Character("Name" + i, "Group" + i, "4", "icon" + (i%6)));
         }
         
         Assaign();
@@ -35,7 +35,7 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        CharacterSheetAdapter characterSheetAdapter = new CharacterSheetAdapter(characterSheets);
+        CharacterSheetAdapter characterSheetAdapter = new CharacterSheetAdapter(characters);
         recyclerView.setAdapter(characterSheetAdapter);
     }
 
@@ -54,17 +54,17 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_game:
-                Intent intent = new Intent(CharacterSheetsListActivity.this, GamePage.class);
+                Intent intent = new Intent(CharactersListActivity.this, GamePage.class);
                 startActivity(intent);
                 break;
 
             case R.id.menu_logout:
-                Intent intent1 = new Intent(CharacterSheetsListActivity.this, LoginActivity.class);
+                Intent intent1 = new Intent(CharactersListActivity.this, LoginActivity.class);
                 startActivity(intent1);
                 break;
 
             case R.id.menu_home:
-                Intent intent2 = new Intent(CharacterSheetsListActivity.this, MainPage.class);
+                Intent intent2 = new Intent(CharactersListActivity.this, MainPage.class);
                 startActivity(intent2);
                 break;
         }
@@ -72,7 +72,7 @@ public class CharacterSheetsListActivity extends AppCompatActivity {
     }
 
     public void press(View view) {
-        Intent intent = new Intent(CharacterSheetsListActivity.this, CharacterSheetCreationActivity.class);
+        Intent intent = new Intent(CharactersListActivity.this, CharacterSheetCreationActivity.class);
         startActivity(intent);
     }
 }
