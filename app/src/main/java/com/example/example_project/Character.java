@@ -6,6 +6,10 @@ public class Character {
     private String level;
     private String group;
     private String icon;
+    private String strength;
+    private String agility;
+    private String intellect;
+    private String will;
 
     public Character(String name, String group, String level, String icon){
         this.name = name;
