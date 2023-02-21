@@ -11,11 +11,15 @@ public class Character {
     private String intellect;
     private String will;
 
-    public Character(String name, String group, String level, String icon){
+    public Character(String name, String group, String level, String icon, String strength, String agility, String intellect, String will){
         this.name = name;
         this.group = group;
         this.level = level;
         this.icon = icon;
+        this.strength = strength;
+        this.agility = agility;
+        this.intellect = intellect;
+        this.will = will;
     }
 
     public String getName() {
@@ -32,5 +36,21 @@ public class Character {
 
     public String getIcon() {
         return icon;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public String getAgility() {
+        return agility;
+    }
+
+    public String getIntellect() {
+        return intellect;
+    }
+
+    public String getWill() {
+        return will;
     }
 }

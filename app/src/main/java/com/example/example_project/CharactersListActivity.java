@@ -26,7 +26,7 @@ public class CharactersListActivity extends AppCompatActivity {
 
         ArrayList<Character> characters = new ArrayList<>();
         for (int i = 0; i < 20; i++){
-            characters.add(new Character("Name" + i, "Group" + i, "4", "icon" + (i%6)));
+            characters.add(new Character("Name" + i, "Group" + i, "4", "icon" + (i%6), "1", "2", "3", "4"));
         }
         
         Assaign();

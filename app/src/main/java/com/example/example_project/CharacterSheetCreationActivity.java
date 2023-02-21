@@ -32,7 +32,8 @@ public class CharacterSheetCreationActivity extends AppCompatActivity {
 
         // Create a new user with a first and last name
         Map<String, Object> character = new HashMap<>();
-        character.put("Name", "Test");
+        Character character1 = new Character("Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test");
+        character.put("Name", character1);
 
         // Add a new document with a generated ID
         db.collection("characters")
