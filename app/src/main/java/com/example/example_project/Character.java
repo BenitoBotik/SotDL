@@ -4,16 +4,14 @@ public class Character {
 
     private String name;
     private String level;
-    private String group;
     private String icon;
     private String strength;
     private String agility;
     private String intellect;
     private String will;
 
-    public Character(String name, String group, String level, String icon, String strength, String agility, String intellect, String will){
+    public Character(String name, String level, String icon, String strength, String agility, String intellect, String will){
         this.name = name;
-        this.group = group;
         this.level = level;
         this.icon = icon;
         this.strength = strength;
@@ -24,10 +22,6 @@ public class Character {
 
     public String getName() {
         return name;
-    }
-
-    public String getGroup() {
-        return group;
     }
 
     public String getLevel() {

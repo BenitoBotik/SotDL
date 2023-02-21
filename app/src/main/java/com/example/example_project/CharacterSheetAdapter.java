@@ -29,7 +29,6 @@ public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAd
     public void onBindViewHolder(@NonNull CharacterSheetViewHolder holder, int position) {
         Character currentCharacter = characters.get(position);
         holder.nameTextView.setText(currentCharacter.getName());
-        holder.groupTextView.setText(currentCharacter.getGroup());
         holder.levelTextView.setText(currentCharacter.getLevel());
         holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacter.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
     }
@@ -41,13 +40,11 @@ public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAd
 
     public static class CharacterSheetViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView;
-        public TextView groupTextView;
         public TextView levelTextView;
         public ImageView iconImageView;
         public CharacterSheetViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.textview_name);
-            groupTextView = itemView.findViewById(R.id.textview_group);
             levelTextView = itemView.findViewById(R.id.textview_level);
             iconImageView = itemView.findViewById(R.id.imageview_icon);
         }

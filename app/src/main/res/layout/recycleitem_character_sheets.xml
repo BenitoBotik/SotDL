@@ -28,27 +28,13 @@
         app:layout_constraintTop_toTopOf="@+id/imageview_icon" />
 
     <TextView
-        android:id="@+id/textview_group"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="8dp"
-        android:text="Group"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_icon"
-        app:layout_constraintEnd_toEndOf="@+id/textview_name"
-        app:layout_constraintStart_toStartOf="@+id/textview_name"
-        app:layout_constraintTop_toBottomOf="@+id/textview_name" />
-
-    <TextView
         android:id="@+id/textview_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:text="4"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_group"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textview_name"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintTop_toTopOf="@+id/textview_name" />
 
     <View
         android:id="@+id/divider"

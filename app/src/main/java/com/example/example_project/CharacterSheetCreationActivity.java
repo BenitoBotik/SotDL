@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,6 +20,13 @@ import java.util.Map;
 
 public class CharacterSheetCreationActivity extends AppCompatActivity {
     private FirebaseFirestore db;
+    private EditText name;
+    private EditText level;
+    private EditText icon;
+    private EditText strength;
+    private EditText agility;
+    private EditText intellect;
+    private EditText will;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,7 @@ public class CharacterSheetCreationActivity extends AppCompatActivity {
 
         // Create a new user with a first and last name
         Map<String, Object> character = new HashMap<>();
-        Character character1 = new Character("Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test");
+        Character character1 = new Character("Test", "Test", "Test", "Test", "Test", "Test", "Test");
         character.put("Name", character1);
 
         // Add a new document with a generated ID
