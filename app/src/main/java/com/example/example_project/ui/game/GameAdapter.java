@@ -1,4 +1,4 @@
-package com.example.example_project;
+package com.example.example_project.ui.game;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.example_project.R;
+
 import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder> {
 
-    private ArrayList<Game> games;
+    private ArrayList<GameActivity> games;
 
-    public GameAdapter(ArrayList<Game> games) {
+    public GameAdapter(ArrayList<GameActivity> games) {
         this.games = games;
     }
 
@@ -28,7 +30,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        Game currentGame = games.get(position);
+        GameActivity currentGame = games.get(position);
         holder.nameTextView.setText(currentGame.getName());
         holder.messageTextView.setText(currentGame.getMessage());
         holder.timeTextView.setText(currentGame.getTime());

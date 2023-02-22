@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.example_project.MainPage;
+import com.example.example_project.ui.main_page.MainActivity;
 import com.example.example_project.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,17 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String email = emailEditText.getText().toString();
         String password = editText_password.getText().toString();
-        if (password.equals("123456")) {
-            sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("email", email);
-            editor.putString("password", password);
-            editor.apply();
-            Intent intent = new Intent(LoginActivity.this, MainPage.class);
-            startActivity(intent);
-            finish();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        presenter.loginClicked(email, password, intent);
 
-        }
     }
 
     public void showEmail(String email) {

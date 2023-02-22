@@ -1,6 +1,6 @@
-package com.example.example_project;
+package com.example.example_project.ui.character;
 
-public class Character {
+public class CharacterActivity {
 
     private String name;
     private String level;
@@ -10,7 +10,7 @@ public class Character {
     private String intellect;
     private String will;
 
-    public Character(String name, String level, String icon, String strength, String agility, String intellect, String will){
+    public CharacterActivity(String name, String level, String icon, String strength, String agility, String intellect, String will){
         this.name = name;
         this.level = level;
         this.icon = icon;

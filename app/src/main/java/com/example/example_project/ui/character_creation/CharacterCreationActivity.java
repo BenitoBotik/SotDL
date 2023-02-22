@@ -1,15 +1,19 @@
-package com.example.example_project;
+package com.example.example_project.ui.character_creation;
 
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.example_project.ui.character.CharacterActivity;
+import com.example.example_project.ui.character_list.CharactersListActivity;
+import com.example.example_project.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CharacterSheetCreationActivity extends AppCompatActivity {
+public class CharacterCreationActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private EditText editText_name;
     private EditText editText_level;
@@ -32,9 +36,10 @@ public class CharacterSheetCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_sheet_creation);
 
+        db = FirebaseFirestore.getInstance();
+
         ViewToId();
 
-        db = FirebaseFirestore.getInstance();
     }
 
     private void ViewToId() {
@@ -56,7 +61,7 @@ public class CharacterSheetCreationActivity extends AppCompatActivity {
 
         // Create a new user with a first and last name
         Map<String, Object> character = new HashMap<>();
-        Character character1 = new Character(name, level,"Test", strength, agility, intellect, will);
+        CharacterActivity character1 = new CharacterActivity(name, level,"Test", strength, agility, intellect, will);
         character.put("Name", character1);
 
         // Add a new document with a generated ID
@@ -74,5 +79,8 @@ public class CharacterSheetCreationActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+
+        Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
+        startActivity(intent);
     }
 }

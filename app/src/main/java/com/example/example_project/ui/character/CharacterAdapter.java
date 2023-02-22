@@ -1,4 +1,4 @@
-package com.example.example_project;
+package com.example.example_project.ui.character;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.example_project.R;
+
 import java.util.ArrayList;
 
-public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAdapter.CharacterSheetViewHolder> {
-    private ArrayList<Character> characters;
+public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterSheetViewHolder> {
+    private ArrayList<CharacterActivity> characters;
 
-    public CharacterSheetAdapter(ArrayList<Character> characters) {
+    public CharacterAdapter(ArrayList<CharacterActivity> characters) {
         this.characters = characters;
     }
 
@@ -27,7 +29,7 @@ public class CharacterSheetAdapter extends RecyclerView.Adapter<CharacterSheetAd
 
     @Override
     public void onBindViewHolder(@NonNull CharacterSheetViewHolder holder, int position) {
-        Character currentCharacter = characters.get(position);
+        CharacterActivity currentCharacter = characters.get(position);
         holder.nameTextView.setText(currentCharacter.getName());
         holder.levelTextView.setText(currentCharacter.getLevel());
         holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacter.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
