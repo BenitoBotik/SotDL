@@ -20,27 +20,43 @@ import java.util.Map;
 
 public class CharacterSheetCreationActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private EditText name;
-    private EditText level;
-    private EditText icon;
-    private EditText strength;
-    private EditText agility;
-    private EditText intellect;
-    private EditText will;
+    private EditText editText_name;
+    private EditText editText_level;
+    private EditText editText_strength;
+    private EditText editText_agility;
+    private EditText editText_intellect;
+    private EditText editText_will;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_sheet_creation);
 
+        ViewToId();
+
         db = FirebaseFirestore.getInstance();
     }
 
+    private void ViewToId() {
+        editText_name = findViewById(R.id.editText_name);
+        editText_level = findViewById(R.id.editText_level);
+        editText_strength = findViewById(R.id.editText_strength);
+        editText_agility = findViewById(R.id.editText_agility);
+        editText_intellect = findViewById(R.id.editText_intellect);
+        editText_will = findViewById(R.id.editText_will);
+    }
+
     public void save(View view) {
+        String name = editText_name.getText().toString();
+        String level = editText_level.getText().toString();
+        String strength = editText_strength.getText().toString();
+        String agility = editText_agility.getText().toString();
+        String intellect = editText_intellect.getText().toString();
+        String will = editText_will.getText().toString();
 
         // Create a new user with a first and last name
         Map<String, Object> character = new HashMap<>();
-        Character character1 = new Character("Test", "Test", "Test", "Test", "Test", "Test", "Test");
+        Character character1 = new Character(name, level,"Test", strength, agility, intellect, will);
         character.put("Name", character1);
 
         // Add a new document with a generated ID
