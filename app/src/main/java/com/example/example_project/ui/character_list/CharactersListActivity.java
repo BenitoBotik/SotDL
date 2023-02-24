@@ -46,7 +46,8 @@ public class CharactersListActivity extends AppCompatActivity {
 //            characters.add(new CharacterActivity("Name" + i, "4", "icon" + (i%6), "1", "2", "3", "4"));
 //        }
 
-        db.collection("users")
+        db.collection("characters")
+                .whereEqualTo("id", "email@gmail.com")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -56,7 +57,7 @@ public class CharactersListActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                             }
                         } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });

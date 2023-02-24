@@ -9,8 +9,9 @@ public class CharacterActivity {
     private String agility;
     private String intellect;
     private String will;
+    private String id;
 
-    public CharacterActivity(String name, String level, String icon, String strength, String agility, String intellect, String will){
+    public CharacterActivity(String name, String level, String icon, String strength, String agility, String intellect, String will, String id){
         this.name = name;
         this.level = level;
         this.icon = icon;
@@ -18,6 +19,7 @@ public class CharacterActivity {
         this.agility = agility;
         this.intellect = intellect;
         this.will = will;
+        this.id = id;
     }
 
     public String getName() {
@@ -46,5 +48,9 @@ public class CharacterActivity {
 
     public String getWill() {
         return will;
+    }
+
+    public String getId() {
+        return id;
     }
 }

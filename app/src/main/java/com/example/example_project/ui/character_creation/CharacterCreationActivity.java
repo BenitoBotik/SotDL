@@ -61,7 +61,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
         // Create a new user with a first and last name
         Map<String, Object> character = new HashMap<>();
-        CharacterActivity character1 = new CharacterActivity(name, level,"Test", strength, agility, intellect, will);
+        CharacterActivity character1 = new CharacterActivity(name, level,"Test", strength, agility, intellect, will, "email@gmail.com");
         character.put("Name", character1);
 
         // Add a new document with a generated ID
