@@ -1,6 +1,6 @@
 package com.example.example_project.ui.character;
 
-public class CharacterActivity {
+public class Character {
 
     private String name;
     private String level;
@@ -9,9 +9,13 @@ public class CharacterActivity {
     private String agility;
     private String intellect;
     private String will;
-    private String id;
+    private String email;
 
-    public CharacterActivity(String name, String level, String icon, String strength, String agility, String intellect, String will, String id){
+    // keep this constructor empty for Firebase
+    public Character() {
+    }
+
+    public Character(String name, String level, String icon, String strength, String agility, String intellect, String will, String email){
         this.name = name;
         this.level = level;
         this.icon = icon;
@@ -19,7 +23,7 @@ public class CharacterActivity {
         this.agility = agility;
         this.intellect = intellect;
         this.will = will;
-        this.id = id;
+        this.email = email;
     }
 
     public String getName() {
@@ -50,7 +54,7 @@ public class CharacterActivity {
         return will;
     }
 
-    public String getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 }

@@ -13,14 +13,14 @@
         android:theme="@style/Theme.Example_project"
         tools:targetApi="31">
         <activity
-            android:name=".ui.character_creation.CharacterCreationActivity"
+            android:name=".ui.character.character_creation.CharacterCreationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.character_list.CharactersListActivity"
+            android:name=".ui.character.character_list.CharactersListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

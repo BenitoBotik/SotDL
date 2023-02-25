@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character_list.CharactersListActivity;
+import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.GameActivity;
 import com.example.example_project.ui.game.GameAdapter;
 import com.example.example_project.ui.login.LoginActivity;

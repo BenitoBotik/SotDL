@@ -1,4 +1,4 @@
-package com.example.example_project.ui.character_creation;
+package com.example.example_project.ui.character.character_creation;
 
 import static android.content.ContentValues.TAG;
 
@@ -11,8 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.example_project.ui.character.CharacterActivity;
-import com.example.example_project.ui.character_list.CharactersListActivity;
+import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,9 +60,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String will = editText_will.getText().toString();
 
         // Create a new user with a first and last name
-        Map<String, Object> character = new HashMap<>();
-        CharacterActivity character1 = new CharacterActivity(name, level,"Test", strength, agility, intellect, will, "email@gmail.com");
-        character.put("Name", character1);
+        Character character = new Character(name, level,"icon0", strength, agility, intellect, will, "username@email.com");
 
         // Add a new document with a generated ID
         db.collection("characters")

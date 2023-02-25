@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.character_creation.CharacterCreationActivity">
+    tools:context=".ui.character.character_creation.CharacterCreationActivity">
 
     <TextView
         android:id="@+id/textView"

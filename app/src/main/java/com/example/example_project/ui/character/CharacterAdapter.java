@@ -11,25 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterSheetViewHolder> {
-    private ArrayList<CharacterActivity> characters;
+public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
+    private List<Character> characters;
 
-    public CharacterAdapter(ArrayList<CharacterActivity> characters) {
+    public CharacterAdapter(List<Character> characters) {
         this.characters = characters;
     }
 
     @NonNull
     @Override
-    public CharacterSheetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View characterSheetsView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_character_sheets, parent, false);
-        return new CharacterSheetViewHolder(characterSheetsView);
+    public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View charactersView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_character_sheets, parent, false);
+        return new CharacterViewHolder(charactersView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CharacterSheetViewHolder holder, int position) {
-        CharacterActivity currentCharacter = characters.get(position);
+    public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
+        Character currentCharacter = characters.get(position);
         holder.nameTextView.setText(currentCharacter.getName());
         holder.levelTextView.setText(currentCharacter.getLevel());
         holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacter.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
@@ -40,11 +40,12 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         return characters.size();
     }
 
-    public static class CharacterSheetViewHolder extends RecyclerView.ViewHolder {
+    public static class CharacterViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView;
         public TextView levelTextView;
         public ImageView iconImageView;
-        public CharacterSheetViewHolder(@NonNull View itemView) {
+
+        public CharacterViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.textview_name);
             levelTextView = itemView.findViewById(R.id.textview_level);
