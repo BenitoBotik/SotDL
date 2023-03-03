@@ -12,7 +12,7 @@ public class LoginPresenter {
         this.view = view;
         sharedPreferences = view.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "guest");
-        view.showEmail(email);
+        //view.showEmail(email);
     }
 
     public void loginClicked(String email, String password, Intent intent) {

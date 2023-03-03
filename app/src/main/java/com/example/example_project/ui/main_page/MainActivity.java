@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
-import com.example.example_project.R;
 import com.example.example_project.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
