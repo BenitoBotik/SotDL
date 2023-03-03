@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
-import com.example.example_project.ui.games_list.GamesListActivity;
+import com.example.example_project.ui.game.games_list.GamesListActivity;
 import com.example.example_project.R;
 import com.example.example_project.ui.login.LoginActivity;
 

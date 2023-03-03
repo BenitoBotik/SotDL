@@ -1,4 +1,4 @@
-package com.example.example_project.ui.character;
+package com.example.example_project.ui.character.character_list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.character.CharacterSelectListener;
 
 import java.util.List;
 

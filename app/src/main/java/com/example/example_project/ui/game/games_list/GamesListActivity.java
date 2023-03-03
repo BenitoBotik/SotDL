@@ -1,4 +1,4 @@
-package com.example.example_project.ui.games_list;
+package com.example.example_project.ui.game.games_list;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

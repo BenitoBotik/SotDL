@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.Character;
-import com.example.example_project.ui.character.CharacterAdapter;
 import com.example.example_project.ui.character.character_creation.CharacterCreationActivity;
-import com.example.example_project.ui.games_list.GamesListActivity;
+import com.example.example_project.ui.game.games_list.GamesListActivity;
 import com.example.example_project.ui.login.LoginActivity;
 import com.example.example_project.ui.main_page.MainActivity;
 import com.google.firebase.firestore.FirebaseFirestore;

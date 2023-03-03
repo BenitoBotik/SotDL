@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Example_project"
         tools:targetApi="31">
         <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.character.character_creation.CharacterCreationActivity"
             android:exported="false">
             <meta-data
@@ -27,7 +34,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.games_list.GamesListActivity"
+            android:name=".ui.game.games_list.GamesListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
