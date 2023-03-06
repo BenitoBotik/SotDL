@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
@@ -16,15 +17,33 @@ import com.example.example_project.ui.game.GameActivity;
 import com.example.example_project.ui.game.GameAdapter;
 import com.example.example_project.ui.login.LoginActivity;
 import com.example.example_project.ui.main_page.MainActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class GamesListActivity extends AppCompatActivity {
+    FirebaseAuth firebaseAuth;
+    GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
+
+        // Initialize firebase auth
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // Initialize firebase user
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        // Initialize sign in client
+        googleSignInClient = GoogleSignIn.getClient(GamesListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         ArrayList<GameActivity> games = new ArrayList<>();
         for (int  i = 0; i < 20; i++){
@@ -55,8 +74,24 @@ public class GamesListActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_logout:
-                Intent intent1 = new Intent(GamesListActivity.this, LoginActivity.class);
-                startActivity(intent1);
+                // Sign out from google
+                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Check condition
+                        if (task.isSuccessful()) {
+                            // When task is successful sign out from firebase
+                            firebaseAuth.signOut();
+                            // Display Toast
+                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+                            //Start a new activity
+                            Intent intent2 = new Intent(GamesListActivity.this, LoginActivity.class);
+                            startActivity(intent2);
+                            // Finish activity
+                            finish();
+                        }
+                    }
+                });
                 break;
 
             case R.id.menu_characters:
