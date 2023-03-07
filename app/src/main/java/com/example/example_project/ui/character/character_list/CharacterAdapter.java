@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.Character;
-import com.example.example_project.ui.character.CharacterSelectListener;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View charactersView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_character_sheets, parent, false);
+        View charactersView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_character, parent, false);
         return new CharacterViewHolder(charactersView);
     }
 

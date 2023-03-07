@@ -19,9 +19,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CharacterCreationActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private EditText editText_name;
@@ -34,7 +31,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character_sheet_creation);
+        setContentView(R.layout.activity_character_creation);
 
         db = FirebaseFirestore.getInstance();
 
@@ -59,7 +56,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String intellect = editText_intellect.getText().toString();
         String will = editText_will.getText().toString();
 
-        // Create a new user with a first and last name
+        // Create a new character
         Character character = new Character(name, level,"icon0", strength, agility, intellect, will, "username@email.com");
 
         // Add a new document with a generated ID

@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder> {
 
-    private ArrayList<GameActivity> games;
+    private ArrayList<Game> games;
 
-    public GameAdapter(ArrayList<GameActivity> games) {
+    public GameAdapter(ArrayList<Game> games) {
         this.games = games;
     }
 
@@ -30,7 +30,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        GameActivity currentGame = games.get(position);
+        Game currentGame = games.get(position);
         holder.nameTextView.setText(currentGame.getName());
         holder.messageTextView.setText(currentGame.getMessage());
         holder.timeTextView.setText(currentGame.getTime());
