@@ -6,13 +6,19 @@ public class Game {
     private String time;
     private String unread;
     private String icon;
+    private String email;
 
-    public Game(String name, String message, String timr, String unread, String icon) {
+    // keep this constructor empty for Firebase
+    public Game() {
+    }
+
+    public Game(String name, String message, String time, String unread, String icon, String email) {
         this.name = name;
         this.message = message;
-        this.time = timr;
+        this.time = time;
         this.unread = unread;
         this.icon = icon;
+        this.email = email;
     }
 
     public String getName() {
@@ -33,5 +39,9 @@ public class Game {
 
     public String getIcon() {
         return icon;
+    }
+
+    public String getId() {
+        return email;
     }
 }

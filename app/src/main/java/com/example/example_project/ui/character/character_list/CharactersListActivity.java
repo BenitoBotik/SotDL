@@ -40,8 +40,8 @@ public class CharactersListActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private final List<Character> characters = new ArrayList<>();
     private CharacterAdapter characterAdapter;
-    FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
+    private FirebaseAuth firebaseAuth;
+    private GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

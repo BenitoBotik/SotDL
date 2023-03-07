@@ -1,4 +1,4 @@
-package com.example.example_project.ui.game;
+package com.example.example_project.ui.game.games_list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.game.Game;
 
 import java.util.ArrayList;
 

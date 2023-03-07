@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character.character_creation.CharacterCreationActivity;
-import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +30,7 @@ public class GameCreationActivity extends AppCompatActivity {
 
     public void CreateGame(View view) {
 
-        Game game = new Game("GameName", "GameDescription", "GameIcon", "GameMaster", "GameMasterEmail");
+        Game game = new Game("GameName", "GameDescription", "GameIcon", "GameMaster", "GameMasterEmail", "username@email.com");
 
         // Add a new document with a generated ID
         db.collection("games")

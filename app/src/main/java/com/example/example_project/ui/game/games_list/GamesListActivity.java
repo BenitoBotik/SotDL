@@ -1,5 +1,7 @@
 package com.example.example_project.ui.game.games_list;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,15 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.character.character_list.CharacterAdapter;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.Game;
-import com.example.example_project.ui.game.GameAdapter;
 import com.example.example_project.ui.game.GameCreationActivity;
 import com.example.example_project.ui.login.LoginActivity;
 import com.example.example_project.ui.main_page.MainActivity;
@@ -26,12 +30,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
 public class GamesListActivity extends AppCompatActivity {
-    FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
+    private FirebaseAuth firebaseAuth;
+    private GoogleSignInClient googleSignInClient;
+    private FirebaseFirestore db;
+    private final ArrayList<Game> games = new ArrayList<>();
+    private GameAdapter gameAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +57,36 @@ public class GamesListActivity extends AppCompatActivity {
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(GamesListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
-        ArrayList<Game> games = new ArrayList<>();
-        for (int  i = 0; i < 20; i++){
-            games.add(new Game( "Group" + i, "what's up dude?", "04:20", "4", "group_icon"));
-        }
-
-        RecyclerView recyclerView = findViewById(R.id.recycleview_chat);
+        // set up the recycler view
+        recyclerView = findViewById(R.id.recycleview_chat);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        GameAdapter gameAdapter = new GameAdapter(games);
+        // set up the adapter
+        gameAdapter = new GameAdapter(games);
         recyclerView.setAdapter(gameAdapter);
+
+        // get the list of characters from the database
+        db = FirebaseFirestore.getInstance();
+        db.collection("games")
+                .whereEqualTo("id", "username@email.com")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        //get the list of documents
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            //add the document to the list
+                            Game game = document.toObject(Game.class);
+                            games.add(game);
+                        }
+
+                        //notify the adapter that the data has changed
+                        gameAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "Error getting documents: ", e);
+                });
     }
 
     @Override
