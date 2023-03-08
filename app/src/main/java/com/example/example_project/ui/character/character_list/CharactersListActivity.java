@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.CharacterActivity;
 import com.example.example_project.ui.character.Character;
 import com.example.example_project.ui.character.character_creation.CharacterCreationActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
@@ -94,6 +95,15 @@ public class CharactersListActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Log.d(TAG, "Error getting documents: ", e);
                 });
+
+        characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(CharactersListActivity.this, CharacterActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

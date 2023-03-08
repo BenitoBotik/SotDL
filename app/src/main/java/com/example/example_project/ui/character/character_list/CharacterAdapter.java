@@ -3,6 +3,7 @@ package com.example.example_project.ui.character.character_list;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,9 +17,18 @@ import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
     private List<Character> characters;
+    private static OnItemClickListener mListener;
 
     public CharacterAdapter(List<Character> characters) {
         this.characters = characters;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -51,6 +61,18 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             nameTextView = itemView.findViewById(R.id.textview_name);
             levelTextView = itemView.findViewById(R.id.textview_level);
             iconImageView = itemView.findViewById(R.id.imageview_icon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
