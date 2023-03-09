@@ -99,8 +99,9 @@ public class CharactersListActivity extends AppCompatActivity {
         characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Character character = characters.get(position);
                 Intent intent = new Intent(CharactersListActivity.this, CharacterActivity.class);
-                intent.putExtra("position", position);
+                intent.putExtra("selected_character", character);
                 startActivity(intent);
             }
         });
