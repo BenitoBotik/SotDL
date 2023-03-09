@@ -41,7 +41,7 @@ public class Game {
         return icon;
     }
 
-    public String getId() {
+    public String getEmail() {
         return email;
     }
 }
