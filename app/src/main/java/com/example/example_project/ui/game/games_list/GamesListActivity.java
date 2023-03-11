@@ -57,6 +57,8 @@ public class GamesListActivity extends AppCompatActivity {
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(GamesListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
+        String email = firebaseUser.getEmail();
+
         // set up the recycler view
         recyclerView = findViewById(R.id.recycleview_chat);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -69,7 +71,7 @@ public class GamesListActivity extends AppCompatActivity {
         // get the list of characters from the database
         db = FirebaseFirestore.getInstance();
         db.collection("games")
-                .whereEqualTo("email", "username@email.com")
+                .whereEqualTo("gm", email)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
@@ -77,6 +79,7 @@ public class GamesListActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             //add the document to the list
                             Game game = document.toObject(Game.class);
+                            game.setId(document.getId());
                             games.add(game);
                         }
 
