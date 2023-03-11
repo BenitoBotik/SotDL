@@ -33,9 +33,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Game currentGame = games.get(position);
         holder.nameTextView.setText(currentGame.getName());
-        holder.messageTextView.setText(currentGame.getMessage());
-        holder.timeTextView.setText(currentGame.getTime());
-        holder.unreadTextView.setText(currentGame.getUnread());
+        holder.messageTextView.setText(currentGame.getGm());
+        holder.timeTextView.setText(currentGame.getPlayerOne());
+        holder.unreadTextView.setText(currentGame.getPlayerTwo());
         holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentGame.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
     }
 

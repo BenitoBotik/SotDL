@@ -1,4 +1,4 @@
-package com.example.example_project.ui;
+package com.example.example_project.ui.character;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -16,6 +16,8 @@ import com.example.example_project.ui.character.character_list.CharactersListAct
 import com.example.example_project.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,6 +29,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_agility;
     private EditText editText_intellect;
     private EditText editText_will;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,13 @@ public class CharacterCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_character_creation);
 
         db = FirebaseFirestore.getInstance();
+
+        // Initialize firebase auth
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        // Initialize firebase user
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        this.email = firebaseUser.getEmail();
 
         ViewToId();
 
@@ -57,7 +67,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String will = editText_will.getText().toString();
 
         // Create a new character
-        Character character = new Character(name, level,"icon0", strength, agility, intellect, will, "username@email.com");
+        Character character = new Character(name, level,"icon0", strength, agility, intellect, will, this.email);
 
         // Add a new document with a generated ID
         db.collection("characters")

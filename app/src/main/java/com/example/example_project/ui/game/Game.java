@@ -2,46 +2,46 @@ package com.example.example_project.ui.game;
 
 public class Game {
     private String name;
-    private String message;
-    private String time;
-    private String unread;
+    private String gm;
+    private String playerOne;
+    private String playerTwo;
     private String icon;
-    private String email;
+    private String playerThree;
 
     // keep this constructor empty for Firebase
     public Game() {
     }
 
-    public Game(String name, String message, String time, String unread, String icon, String email) {
+    public Game(String name, String gm, String playerOne, String playerTwo, String icon, String playerThree) {
         this.name = name;
-        this.message = message;
-        this.time = time;
-        this.unread = unread;
+        this.gm = gm;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
         this.icon = icon;
-        this.email = email;
+        this.playerThree = playerThree;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getMessage() {
-        return message;
+    public String getGm() {
+        return gm;
     }
 
-    public String getTime() {
-        return time;
+    public String getPlayerOne() {
+        return playerOne;
     }
 
-    public String getUnread() {
-        return unread;
+    public String getPlayerTwo() {
+        return playerTwo;
     }
 
     public String getIcon() {
         return icon;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPlayerThree() {
+        return playerThree;
     }
 }

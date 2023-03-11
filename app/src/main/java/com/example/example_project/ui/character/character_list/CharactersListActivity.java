@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.CharacterActivity;
+import com.example.example_project.ui.character.CharacterActivity;
 import com.example.example_project.ui.character.Character;
 import com.example.example_project.ui.character.character_creation.CharacterCreationActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
@@ -55,6 +55,9 @@ public class CharactersListActivity extends AppCompatActivity {
         // Initialize firebase user
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
+        // Get the user's email
+        String email = firebaseUser.getEmail();
+
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(CharactersListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
@@ -77,7 +80,7 @@ public class CharactersListActivity extends AppCompatActivity {
         // get the list of characters from the database
         db = FirebaseFirestore.getInstance();
         db.collection("characters")
-                .whereEqualTo("email", "username@email.com")
+                .whereEqualTo("email", email)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
