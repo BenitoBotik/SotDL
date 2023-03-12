@@ -2,12 +2,6 @@ package com.example.example_project.ui.game.games_list;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +14,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.example_project.R;
-import com.example.example_project.ui.game.GameActivity;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.Game;
+import com.example.example_project.ui.game.GameActivity;
 import com.example.example_project.ui.game.GameCreationActivity;
 import com.example.example_project.ui.login.LoginActivity;
 import com.example.example_project.ui.main_page.MainActivity;
@@ -34,16 +34,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GamesListActivity extends AppCompatActivity {
+    private final ArrayList<Game> games = new ArrayList<>();
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private FirebaseFirestore db;
-    private final ArrayList<Game> games = new ArrayList<>();
     private GameAdapter gameAdapter;
     private RecyclerView recyclerView;
     private ImageView joinButton;
@@ -112,7 +116,7 @@ public class GamesListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Create and show the message box
                 AlertDialog.Builder builder = new AlertDialog.Builder(GamesListActivity.this);
-                builder.setTitle("Join the group");
+                builder.setTitle("Enter the group's code");
 
                 // Set up the input
                 final EditText input = new EditText(GamesListActivity.this);
@@ -124,7 +128,37 @@ public class GamesListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = input.getText().toString();
-                        // Do something with the name, such as sending it to a server or saving it locally
+
+                        //get document reference
+                        DocumentReference docRef = db.collection("games").document(name);
+
+                        // get document and update it
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        //get the list of players
+                                        ArrayList<String> players = (ArrayList<String>) document.get("players");
+                                        //add the current player to the list
+                                        players.add(email);
+                                        //update the document
+                                        Map<String, Object> updates = new HashMap<>();
+                                        updates.put("players", players);
+                                        docRef.update(updates)
+                                                .addOnSuccessListener(aVoid -> {
+                                                    Toast.makeText(getApplicationContext(), "Player successfully added to the game!", Toast.LENGTH_SHORT).show();
+                                                })
+                                                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error adding player", Toast.LENGTH_SHORT).show());
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "the game doesn't exist!", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
