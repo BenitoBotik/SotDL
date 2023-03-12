@@ -12,6 +12,7 @@ public class Character implements Serializable {
     private String intellect;
     private String will;
     private String email;
+    private String id;
 
     // keep this constructor empty for Firebase
     public Character() {
@@ -58,5 +59,13 @@ public class Character implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -16,10 +16,15 @@ import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder> {
 
-    private ArrayList<Game> games;
+    private static GameAdapter.OnItemClickListener mListener;
+    private final ArrayList<Game> games;
 
     public GameAdapter(ArrayList<Game> games) {
         this.games = games;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -42,7 +47,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
         return games.size();
     }
 
-    public static class ChatViewHolder extends RecyclerView.ViewHolder{
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public static class ChatViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameTextView;
         public TextView messageTextView;
@@ -55,6 +64,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
             nameTextView = itemView.findViewById(R.id.textview_group_name);
             messageTextView = itemView.findViewById(R.id.textview_last_message);
             iconImageView = itemView.findViewById(R.id.imageview_group_icon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

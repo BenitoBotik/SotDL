@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.game.GameActivity;
 import com.example.example_project.ui.character.character_list.CharacterAdapter;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.Game;
@@ -90,6 +90,16 @@ public class GamesListActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Log.d(TAG, "Error getting documents: ", e);
                 });
+
+        gameAdapter.setOnItemClickListener(new GameAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Game game = games.get(position);
+                Intent intent = new Intent(GamesListActivity.this, GameActivity.class);
+                intent.putExtra("selected_game", game);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

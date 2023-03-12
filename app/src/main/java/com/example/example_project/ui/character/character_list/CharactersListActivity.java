@@ -88,6 +88,7 @@ public class CharactersListActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             //add the document to the list
                             Character character = document.toObject(Character.class);
+                            character.setId(document.getId());
                             characters.add(character);
                         }
 
@@ -99,6 +100,7 @@ public class CharactersListActivity extends AppCompatActivity {
                     Log.d(TAG, "Error getting documents: ", e);
                 });
 
+        // set up the click listener
         characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -110,6 +112,8 @@ public class CharactersListActivity extends AppCompatActivity {
         });
     }
 
+
+    //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

@@ -3,7 +3,6 @@ package com.example.example_project.ui.character.character_list;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,15 +15,11 @@ import com.example.example_project.ui.character.Character;
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
-    private List<Character> characters;
     private static OnItemClickListener mListener;
+    private final List<Character> characters;
 
     public CharacterAdapter(List<Character> characters) {
         this.characters = characters;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -49,6 +44,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     @Override
     public int getItemCount() {
         return characters.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
     public static class CharacterViewHolder extends RecyclerView.ViewHolder {
