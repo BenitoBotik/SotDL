@@ -3,21 +3,25 @@ package com.example.example_project.ui.game.games_list;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.game.GameActivity;
-import com.example.example_project.ui.character.character_list.CharacterAdapter;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.Game;
 import com.example.example_project.ui.game.GameCreationActivity;
@@ -42,6 +46,7 @@ public class GamesListActivity extends AppCompatActivity {
     private final ArrayList<Game> games = new ArrayList<>();
     private GameAdapter gameAdapter;
     private RecyclerView recyclerView;
+    private ImageView joinButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +105,39 @@ public class GamesListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        joinButton = findViewById(R.id.imageview_join_game);
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create and show the message box
+                AlertDialog.Builder builder = new AlertDialog.Builder(GamesListActivity.this);
+                builder.setTitle("Join the group");
+
+                // Set up the input
+                final EditText input = new EditText(GamesListActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = input.getText().toString();
+                        // Do something with the name, such as sending it to a server or saving it locally
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
     @Override
@@ -149,8 +187,5 @@ public class GamesListActivity extends AppCompatActivity {
     public void addGame(View view) {
         Intent intent = new Intent(GamesListActivity.this, GameCreationActivity.class);
         startActivity(intent);
-    }
-
-    public void joinGame(View view) {
     }
 }
