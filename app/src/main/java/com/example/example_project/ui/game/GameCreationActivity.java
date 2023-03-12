@@ -64,5 +64,6 @@ public class GameCreationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(GameCreationActivity.this, GamesListActivity.class);
         startActivity(intent);
+        finish();
     }
 }

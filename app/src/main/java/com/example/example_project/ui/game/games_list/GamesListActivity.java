@@ -150,4 +150,7 @@ public class GamesListActivity extends AppCompatActivity {
         Intent intent = new Intent(GamesListActivity.this, GameCreationActivity.class);
         startActivity(intent);
     }
+
+    public void joinGame(View view) {
+    }
 }
