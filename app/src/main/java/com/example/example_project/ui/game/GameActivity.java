@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.example_project.R;
 
 public class GameActivity extends AppCompatActivity {
-    private TextView textViewId;
+    private TextView IdTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,10 @@ public class GameActivity extends AppCompatActivity {
 
         ViewToId();
 
-        textViewId.setText(game.getId());
+        IdTextView.setText(game.getId());
     }
 
     private void ViewToId() {
-        textViewId = findViewById(R.id.textview_id);
+        IdTextView = findViewById(R.id.id_textview);
     }
 }
