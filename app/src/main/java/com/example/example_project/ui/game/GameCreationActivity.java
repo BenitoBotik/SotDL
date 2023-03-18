@@ -43,6 +43,7 @@ public class GameCreationActivity extends AppCompatActivity {
     public void CreateGame(View view) {
 
         ArrayList<String> players = new ArrayList<>();
+        players.add(email);
 
         Game game = new Game("Test Game", email, "Test Icon", players);
 

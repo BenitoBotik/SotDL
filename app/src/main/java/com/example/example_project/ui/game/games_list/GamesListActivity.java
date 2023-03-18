@@ -80,7 +80,7 @@ public class GamesListActivity extends AppCompatActivity {
         // get the list of characters from the database
         db = FirebaseFirestore.getInstance();
         db.collection("games")
-                .whereEqualTo("gm", email)
+                .whereArrayContains("players", email)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
