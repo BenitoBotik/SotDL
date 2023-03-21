@@ -2,12 +2,11 @@ package com.example.example_project.ui.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Game implements Serializable {
     private String name;
     private String gm;
-    private String icon;
+    private String map;
     private ArrayList<String> players;
     private String id;
 
@@ -15,10 +14,10 @@ public class Game implements Serializable {
     public Game() {
     }
 
-    public Game(String name, String gm, String icon, ArrayList<String> players) {
+    public Game(String name, String gm, String map, ArrayList<String> players) {
         this.name = name;
         this.gm = gm;
-        this.icon = icon;
+        this.map = map;
         this.players = players;
     }
 
@@ -30,8 +29,8 @@ public class Game implements Serializable {
         return gm;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getMap() {
+        return map;
     }
 
     public ArrayList<String> getPlayers() {

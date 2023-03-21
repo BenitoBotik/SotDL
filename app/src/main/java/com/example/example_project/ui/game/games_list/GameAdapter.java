@@ -39,7 +39,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
         Game currentGame = games.get(position);
         holder.nameTextView.setText(currentGame.getName());
         holder.messageTextView.setText(currentGame.getGm());
-        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentGame.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
+        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentGame.getMap(), "drawable", holder.nameTextView.getContext().getPackageName()));
     }
 
     @Override
