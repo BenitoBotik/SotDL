@@ -18,4 +18,12 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageview_add_icon"
+        android:layout_width="54dp"
+        android:layout_height="41dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/addbutton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
