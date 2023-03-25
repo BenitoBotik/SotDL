@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // create a new game icon of size 64x64
                 ImageView icon = new ImageView(GameActivity.this);
-                icon.setImageResource(R.drawable.icon0);
+                icon.setImageResource(R.drawable.icon3);
                 icon.setLayoutParams(new ViewGroup.LayoutParams(64, 64));
 
                 // Set the ImageView's id

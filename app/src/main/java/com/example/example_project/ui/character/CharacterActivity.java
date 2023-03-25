@@ -25,6 +25,10 @@ public class CharacterActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference docRef;
     private Button deleteButton;
+    private TextView strengthTextView;
+    private TextView agilityTextView;
+    private TextView intellectTextView;
+    private TextView willTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,18 @@ public class CharacterActivity extends AppCompatActivity {
         ViewToId();
 
         nameTextView.setText(character.getName());
+        strengthTextView.setText("Strength " + String.valueOf(character.getStrength()));
+        agilityTextView.setText("Agility " + String.valueOf(character.getAgility()));
+        intellectTextView.setText("Intellect " + String.valueOf(character.getIntellect()));
+        willTextView.setText("Will " + String.valueOf(character.getWill()));
     }
 
     private void ViewToId() {
         nameTextView = findViewById(R.id.nameTextView);
+        strengthTextView = findViewById(R.id.textview_strength);
+        agilityTextView = findViewById(R.id.textview_agility);
+        intellectTextView = findViewById(R.id.textview_intellect);
+        willTextView = findViewById(R.id.textview_will);
     }
 
     public void DeleteCharacter(View view) {
