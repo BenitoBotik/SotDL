@@ -1,6 +1,7 @@
 package com.example.example_project.ui.game;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView idTextView;
     private ConstraintLayout gameLayout;
     private ImageView addIcon;
+    private ImageView bucket;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -34,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
         // get game layout
         gameLayout = findViewById(R.id.textview_id);
         addIcon = findViewById(R.id.imageview_add_icon);
+        bucket = findViewById(R.id.imageview_bucket);
 
         // add icon to game layout
         addIcon.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +91,24 @@ public class GameActivity extends AppCompatActivity {
                                         .y(newY)
                                         .setDuration(0)
                                         .start();
+
+                                // Check if the ImageView is overlapping the Bucket view
+                                if (isViewOverlapping(icon, bucket)) {
+                                    // If the ImageView is overlapping, change the Bucket to an open bucket
+                                    bucket.setImageResource(R.drawable.bucket_opened);
+                                }
+                                else {
+                                    // Otherwise, change the Bucket back to a closed bucket
+                                    bucket.setImageResource(R.drawable.bucket_closed);
+                                }
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                // When the touch gesture is released, check if the ImageView is over the Bucket view
+                                if (isViewOverlapping(icon, bucket)) {
+                                    // If it is, delete the ImageView and change the Bucket back to a closed bucket
+                                    ((ViewGroup)icon.getParent()).removeView(icon);
+                                    bucket.setImageResource(R.drawable.bucket_closed);
+                                }
                                 break;
                             default:
                                 return false;
@@ -97,7 +118,14 @@ public class GameActivity extends AppCompatActivity {
                 });
             }
         });
+    }
 
-
+    // Helper function to check if two views are overlapping
+    public static boolean isViewOverlapping(View firstView, View secondView) {
+        Rect firstRect = new Rect();
+        firstView.getHitRect(firstRect);
+        Rect secondRect = new Rect();
+        secondView.getHitRect(secondRect);
+        return Rect.intersects(firstRect, secondRect);
     }
 }
