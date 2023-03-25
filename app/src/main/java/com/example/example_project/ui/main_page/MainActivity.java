@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     GoogleSignInClient googleSignInClient;
+    TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(MainActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+
+        ViewToId();
+
+        welcome.setText("Welcome " + firebaseUser.getDisplayName() + "!");
+        welcome.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    private void ViewToId() {
+        welcome = findViewById(R.id.textview_welcome);
     }
 
     @Override
