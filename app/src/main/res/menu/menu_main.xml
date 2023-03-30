@@ -14,8 +14,4 @@
         android:id="@+id/menu_characters"
         android:icon="@drawable/orc_icon"
         android:title="Characters"/>
-    <item
-        android:id="@+id/menu_logout"
-        android:icon="@drawable/logout"
-        android:title="Logout"/>
 </menu>

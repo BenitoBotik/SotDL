@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,6 +35,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+        // Initialize and assign variable
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+
+        // Set Home selected
+        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId())
+                {
+                    case R.id.menu_game:
+                        startActivity(new Intent(getApplicationContext(),GamesListActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.menu_home:
+                        return true;
+                    case R.id.menu_characters:
+                        startActivity(new Intent(getApplicationContext(),CharactersListActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         // Initialize firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -54,46 +83,46 @@ public class MainActivity extends AppCompatActivity {
         welcome = findViewById(R.id.textview_welcome);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_game:
-                Intent intent = new Intent(MainActivity.this, GamesListActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.menu_characters:
-                Intent intent1 = new Intent(MainActivity.this, CharactersListActivity.class);
-                startActivity(intent1);
-                break;
-
-            case R.id.menu_logout:
-                // Sign out from google
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // Check condition
-                        if (task.isSuccessful()) {
-                            // When task is successful sign out from firebase
-                            firebaseAuth.signOut();
-                            // Display Toast
-                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
-                            //Start a new activity
-                            Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
-                            startActivity(intent2);
-                            // Finish activity
-                            finish();
-                        }
-                    }
-                });
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_game:
+//                Intent intent = new Intent(MainActivity.this, GamesListActivity.class);
+//                startActivity(intent);
+//                break;
+//
+//            case R.id.menu_characters:
+//                Intent intent1 = new Intent(MainActivity.this, CharactersListActivity.class);
+//                startActivity(intent1);
+//                break;
+//
+//            case R.id.menu_logout:
+//                // Sign out from google
+//                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // Check condition
+//                        if (task.isSuccessful()) {
+//                            // When task is successful sign out from firebase
+//                            firebaseAuth.signOut();
+//                            // Display Toast
+//                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+//                            //Start a new activity
+//                            Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+//                            startActivity(intent2);
+//                            // Finish activity
+//                            finish();
+//                        }
+//                    }
+//                });
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }
