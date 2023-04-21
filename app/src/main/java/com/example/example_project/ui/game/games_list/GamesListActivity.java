@@ -178,6 +178,12 @@ public class GamesListActivity extends AppCompatActivity {
                                         docRef.update(updates)
                                                 .addOnSuccessListener(aVoid -> {
                                                     Toast.makeText(getApplicationContext(), "Player successfully added to the game!", Toast.LENGTH_SHORT).show();
+                                                    //add the game to the list
+                                                    Game game = document.toObject(Game.class);
+                                                    game.setId(document.getId());
+                                                    games.add(game);
+                                                    //notify the adapter that the data has changed
+                                                    gameAdapter.notifyDataSetChanged();
                                                 })
                                                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error adding player", Toast.LENGTH_SHORT).show());
                                     } else {
@@ -202,50 +208,6 @@ public class GamesListActivity extends AppCompatActivity {
             }
         });
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_home:
-//                Intent intent = new Intent(GamesListActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                break;
-//
-//            case R.id.menu_logout:
-//                // Sign out from google
-//                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // Check condition
-//                        if (task.isSuccessful()) {
-//                            // When task is successful sign out from firebase
-//                            firebaseAuth.signOut();
-//                            // Display Toast
-//                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
-//                            //Start a new activity
-//                            Intent intent2 = new Intent(GamesListActivity.this, LoginActivity.class);
-//                            startActivity(intent2);
-//                            // Finish activity
-//                            finish();
-//                        }
-//                    }
-//                });
-//                break;
-//
-//            case R.id.menu_characters:
-//                Intent intent2 = new Intent(GamesListActivity.this, CharactersListActivity.class);
-//                startActivity(intent2);
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public void addGame(View view) {
         Intent intent = new Intent(GamesListActivity.this, GameCreationActivity.class);
