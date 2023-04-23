@@ -20,43 +20,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:text="group"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_group_icon"
         app:layout_constraintStart_toEndOf="@+id/imageview_group_icon"
         app:layout_constraintTop_toTopOf="@+id/imageview_group_icon" />
-
-    <TextView
-        android:id="@+id/textview_last_message"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="what's up?"
-        app:layout_constraintBottom_toBottomOf="@+id/imageview_group_icon"
-        app:layout_constraintStart_toStartOf="@+id/textview_group_name"
-        app:layout_constraintTop_toBottomOf="@+id/textview_group_name" />
-
-    <TextView
-        android:id="@+id/textview_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginEnd="16dp"
-        android:text="04:20"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_group_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textview_group_name"
-        app:layout_constraintTop_toTopOf="@+id/textview_group_name" />
-
-    <TextView
-        android:id="@+id/textview_unread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4"
-        app:layout_constraintBottom_toBottomOf="@+id/textview_last_message"
-        app:layout_constraintEnd_toEndOf="@+id/textview_time"
-        app:layout_constraintStart_toStartOf="@+id/textview_time"
-        app:layout_constraintTop_toTopOf="@+id/textview_last_message" />
 
     <View
         android:id="@+id/divider2"
@@ -64,7 +32,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/textview_unread"
         app:layout_constraintStart_toStartOf="@+id/imageview_group_icon"
         app:layout_constraintTop_toBottomOf="@+id/imageview_group_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
