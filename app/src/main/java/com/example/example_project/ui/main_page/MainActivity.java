@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     GoogleSignInClient googleSignInClient;
     TextView welcome;
+    ImageView signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,52 +78,27 @@ public class MainActivity extends AppCompatActivity {
 
         welcome.setText("Welcome " + firebaseUser.getDisplayName() + "!");
         welcome.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        //sign out method
+        signOut = findViewById(R.id.signout_button);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(MainActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+            }
+        });
+
     }
 
     private void ViewToId() {
         welcome = findViewById(R.id.textview_welcome);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_game:
-//                Intent intent = new Intent(MainActivity.this, GamesListActivity.class);
-//                startActivity(intent);
-//                break;
-//
-//            case R.id.menu_characters:
-//                Intent intent1 = new Intent(MainActivity.this, CharactersListActivity.class);
-//                startActivity(intent1);
-//                break;
-//
-//            case R.id.menu_logout:
-//                // Sign out from google
-//                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // Check condition
-//                        if (task.isSuccessful()) {
-//                            // When task is successful sign out from firebase
-//                            firebaseAuth.signOut();
-//                            // Display Toast
-//                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
-//                            //Start a new activity
-//                            Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
-//                            startActivity(intent2);
-//                            // Finish activity
-//                            finish();
-//                        }
-//                    }
-//                });
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }
