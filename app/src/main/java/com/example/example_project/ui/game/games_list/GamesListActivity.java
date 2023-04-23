@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -24,13 +23,13 @@ import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.Game;
 import com.example.example_project.ui.game.GameActivity;
-import com.example.example_project.ui.game.GameCreationActivity;
-import com.example.example_project.ui.login.LoginActivity;
 import com.example.example_project.ui.main_page.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +51,8 @@ public class GamesListActivity extends AppCompatActivity {
     private GameAdapter gameAdapter;
     private RecyclerView recyclerView;
     private ImageView joinButton;
+    private ImageView addButton;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class GamesListActivity extends AppCompatActivity {
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(GamesListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
-        String email = firebaseUser.getEmail();
+        email = firebaseUser.getEmail();
 
         // set up the recycler view
         recyclerView = findViewById(R.id.recycleview_chat);
@@ -139,6 +140,7 @@ public class GamesListActivity extends AppCompatActivity {
             }
         });
 
+        // join a game
         joinButton = findViewById(R.id.imageview_join_game);
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,10 +209,61 @@ public class GamesListActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-    }
 
-    public void addGame(View view) {
-        Intent intent = new Intent(GamesListActivity.this, GameCreationActivity.class);
-        startActivity(intent);
+        addButton = findViewById(R.id.imageview_add_game);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create and show the message box
+                AlertDialog.Builder builder = new AlertDialog.Builder(GamesListActivity.this);
+                builder.setTitle("Enter the group's name");
+
+                // Set up the input
+                final EditText input = new EditText(GamesListActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = input.getText().toString();
+
+                        ArrayList<String> players = new ArrayList<>();
+                        players.add(email);
+
+                        Game game = new Game(name, email, "Test Icon", players);
+
+                        // Add a new document with a generated ID
+                        db.collection("games")
+                                .add(game)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        games.add(game);
+                                        //notify the adapter that the data has changed
+                                        gameAdapter.notifyDataSetChanged();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 }
