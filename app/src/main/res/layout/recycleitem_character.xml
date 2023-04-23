@@ -21,8 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/joti_one"
         android:text="Name"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_icon"
         app:layout_constraintEnd_toStartOf="@+id/textview_level"
         app:layout_constraintStart_toEndOf="@+id/imageview_icon"
         app:layout_constraintTop_toTopOf="@+id/imageview_icon" />
@@ -32,7 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
+        android:fontFamily="@font/joti_one"
         android:text="4"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textview_name" />
 
