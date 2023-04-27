@@ -232,7 +232,7 @@ public class GamesListActivity extends AppCompatActivity {
                         ArrayList<String> players = new ArrayList<>();
                         players.add(email);
 
-                        Game game = new Game(name, email, "Test Icon", players);
+                        Game game = new Game(name, email, "Test Icon", players, null);
 
                         // Add a new document with a generated ID
                         db.collection("games")

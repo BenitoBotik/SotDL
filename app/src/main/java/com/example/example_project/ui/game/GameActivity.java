@@ -14,12 +14,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.Icon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
     private TextView idTextView;
     private ConstraintLayout gameLayout;
     private ImageView addIcon;
     private ImageView bucket;
+    private List<Icon> icons = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -38,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
         addIcon = findViewById(R.id.imageview_add_icon);
         bucket = findViewById(R.id.imageview_bucket);
 
-        // add icon to game layout
+        // add a movable icon to game layout
         addIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
 
                 // Set the ImageView's id
                 icon.setId(View.generateViewId()); // generate a unique id for the ImageView
+                icons.add(new Icon(icon.getId(), 0, 0));
 
                 // add the game icon to the main layout
                 gameLayout.addView(icon);
@@ -76,6 +82,8 @@ public class GameActivity extends AppCompatActivity {
                                 // Update the position of the ImageView based on touch events
                                 float newX = event.getRawX() + dX;
                                 float newY = event.getRawY() + dY;
+                                icons.get(icons.indexOf(new Icon(view.getId(), 0, 0))).setX(newX);
+                                icons.get(icons.indexOf(new Icon(view.getId(), 0, 0))).setY(newY);
 
                                 // Get the boundaries of the parent ConstraintLayout
                                 ConstraintLayout parentLayout = findViewById(R.id.textview_id);

@@ -1,5 +1,7 @@
 package com.example.example_project.ui.game;
 
+import com.example.example_project.ui.Icon;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,16 +11,18 @@ public class Game implements Serializable {
     private String map;
     private ArrayList<String> players;
     private String id;
+    private ArrayList<Icon> icons;
 
     // keep this constructor empty for Firebase
     public Game() {
     }
 
-    public Game(String name, String gm, String map, ArrayList<String> players) {
+    public Game(String name, String gm, String map, ArrayList<String> players, ArrayList<Icon> icons) {
         this.name = name;
         this.gm = gm;
         this.map = map;
         this.players = players;
+        this.icons = icons;
     }
 
     public String getName() {
@@ -44,4 +48,12 @@ public class Game implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    public ArrayList<Icon> getIcons() {
+            return icons;
+        }
+        
+        public void setIcons(ArrayList<Icon> icons) {
+            this.icons = icons;
+        }
 }
