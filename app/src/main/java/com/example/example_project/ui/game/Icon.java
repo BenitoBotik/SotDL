@@ -1,4 +1,4 @@
-package com.example.example_project.ui;
+package com.example.example_project.ui.game;
 
 public class Icon {
     private int image;

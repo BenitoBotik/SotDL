@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.example_project.ui.character.Character;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
@@ -30,6 +31,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_intellect;
     private EditText editText_will;
     private String email;
+    private ImageView iconImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,17 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
         ViewToId();
 
+        iconImageView = findViewById(R.id.character_icon_imageview);
+
+        // Handle click on the icon image view to open the gallery
+        iconImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     private void ViewToId() {
@@ -65,9 +78,10 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String agility = editText_agility.getText().toString();
         String intellect = editText_intellect.getText().toString();
         String will = editText_will.getText().toString();
+        String icon = iconImageView.toString();
 
         // Create a new character
-        Character character = new Character(name, level,"icon0", strength, agility, intellect, will, this.email);
+        Character character = new Character(name, level, icon, strength, agility, intellect, will, this.email);
 
         // Add a new document with a generated ID
         db.collection("characters")
@@ -87,5 +101,15 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
         startActivity(intent);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // If the request code is 1 and the result code is OK
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Get the data from the intent
+            iconImageView.setImageURI(data.getData());
+        }
     }
 }

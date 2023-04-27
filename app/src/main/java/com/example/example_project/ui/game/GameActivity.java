@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.Icon;
 
 import java.util.ArrayList;
 import java.util.List;

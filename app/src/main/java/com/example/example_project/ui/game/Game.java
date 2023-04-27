@@ -1,7 +1,5 @@
 package com.example.example_project.ui.game;
 
-import com.example.example_project.ui.Icon;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
