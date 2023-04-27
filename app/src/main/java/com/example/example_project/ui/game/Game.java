@@ -15,12 +15,13 @@ public class Game implements Serializable {
     public Game() {
     }
 
-    public Game(String name, String gm, String map, ArrayList<String> players, ArrayList<Icon> icons) {
+    public Game(String name, String gm, String map, ArrayList<String> players, String id) {
         this.name = name;
         this.gm = gm;
         this.map = map;
         this.players = players;
-        this.icons = icons;
+        this.id = id;
+        this.icons = new ArrayList<>();
     }
 
     public String getName() {
@@ -50,7 +51,7 @@ public class Game implements Serializable {
     public ArrayList<Icon> getIcons() {
             return icons;
         }
-        
+
         public void setIcons(ArrayList<Icon> icons) {
             this.icons = icons;
         }
