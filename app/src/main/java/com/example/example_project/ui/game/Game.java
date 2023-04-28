@@ -44,15 +44,15 @@ public class Game implements Serializable {
         return id;
     }
 
+    public void setIcons(ArrayList<Icon> icons) {
+        this.icons = icons;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
 
     public ArrayList<Icon> getIcons() {
             return icons;
-        }
-
-        public void setIcons(ArrayList<Icon> icons) {
-            this.icons = icons;
         }
 }

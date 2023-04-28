@@ -100,6 +100,7 @@ public class GameActivity extends AppCompatActivity {
 
                                     // Update the position in FireStore
                                     Icon movedIcon = new Icon("icon3", newX, newY);
+//                                    icons.set(icons.indexOf(icon), movedIcon); //this line bugs the code
                                     Game data = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId());
                                     data.setIcons(icons);
                                     docRef.set(data);
