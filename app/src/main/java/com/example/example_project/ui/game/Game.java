@@ -21,7 +21,6 @@ public class Game implements Serializable {
         this.map = map;
         this.players = players;
         this.id = id;
-        this.icons = new ArrayList<>();
     }
 
     public String getName() {
@@ -44,15 +43,7 @@ public class Game implements Serializable {
         return id;
     }
 
-    public void setIcons(ArrayList<Icon> icons) {
-        this.icons = icons;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
-
-    public ArrayList<Icon> getIcons() {
-            return icons;
-        }
 }

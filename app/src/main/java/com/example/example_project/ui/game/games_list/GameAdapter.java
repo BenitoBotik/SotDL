@@ -14,7 +14,7 @@ import com.example.example_project.ui.game.Game;
 
 import java.util.ArrayList;
 
-public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
 
     private static GameAdapter.OnItemClickListener mListener;
     private final ArrayList<Game> games;
@@ -29,13 +29,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
 
     @NonNull
     @Override
-    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleitem_game, parent, false);
-        return new ChatViewHolder(chatView);
+        return new GameViewHolder(chatView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game currentGame = games.get(position);
         holder.nameTextView.setText(currentGame.getName());
         holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentGame.getMap(), "drawable", holder.nameTextView.getContext().getPackageName()));
@@ -50,12 +50,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ChatViewHolder
         void onItemClick(int position);
     }
 
-    public static class ChatViewHolder extends RecyclerView.ViewHolder {
+    public static class GameViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameTextView;
         public ImageView iconImageView;
 
-        public ChatViewHolder(@NonNull View itemView) {
+        public GameViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.textview_group_name);
             iconImageView = itemView.findViewById(R.id.imageview_group_icon);
