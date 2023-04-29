@@ -241,6 +241,7 @@ public class GamesListActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
                                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        game.setId(documentReference.getId());
                                         games.add(game);
                                         //notify the adapter that the data has changed
                                         gameAdapter.notifyDataSetChanged();

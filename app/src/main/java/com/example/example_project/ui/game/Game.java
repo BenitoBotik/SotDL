@@ -9,7 +9,6 @@ public class Game implements Serializable {
     private String map;
     private ArrayList<String> players;
     private String id;
-    private ArrayList<Icon> icons;
 
     // keep this constructor empty for Firebase
     public Game() {
