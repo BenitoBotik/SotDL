@@ -50,16 +50,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
         ViewToId();
 
         iconImageView = findViewById(R.id.character_icon_imageview);
-
-        // Handle click on the icon image view to open the gallery
-        iconImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, 1);
-            }
-        });
     }
 
     private void ViewToId() {
