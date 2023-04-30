@@ -42,10 +42,10 @@ public class CharacterActivity extends AppCompatActivity {
         ViewToId();
 
         nameTextView.setText(character.getName());
-        strengthTextView.setText("Strength " + String.valueOf(character.getStrength()));
-        agilityTextView.setText("Agility " + String.valueOf(character.getAgility()));
-        intellectTextView.setText("Intellect " + String.valueOf(character.getIntellect()));
-        willTextView.setText("Will " + String.valueOf(character.getWill()));
+        strengthTextView.setText(String.valueOf(character.getStrength()));
+        agilityTextView.setText(String.valueOf(character.getAgility()));
+        intellectTextView.setText(String.valueOf(character.getIntellect()));
+        willTextView.setText(String.valueOf(character.getWill()));
     }
 
     private void ViewToId() {
