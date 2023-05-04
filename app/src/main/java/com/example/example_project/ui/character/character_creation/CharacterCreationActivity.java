@@ -47,12 +47,12 @@ public class CharacterCreationActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         this.email = firebaseUser.getEmail();
 
-        ViewToId();
+        SetViews();
 
         iconImageView = findViewById(R.id.character_icon_imageview);
     }
 
-    private void ViewToId() {
+    private void SetViews() {
         editText_name = findViewById(R.id.editText_name);
         editText_level = findViewById(R.id.editText_level);
         editText_strength = findViewById(R.id.editText_strength);

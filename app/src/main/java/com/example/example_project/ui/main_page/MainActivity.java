@@ -2,7 +2,6 @@ package com.example.example_project.ui.main_page;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,16 +25,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-
-    FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
-    TextView welcome;
-    ImageView signOut;
+    private MainPresenter presenter;
+    private TextView welcome;
+    private ImageView signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+        SetViews();
+
+        presenter = new MainPresenter(this);
+
+        //sign out method
+        signOut = findViewById(R.id.signout_button);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.LogOutClicked();
+            }
+        });
+
+    }
+
+    private void SetViews() {
+        welcome = findViewById(R.id.textview_welcome);
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -64,41 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        // Initialize firebase auth
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        // Initialize firebase user
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        // Initialize sign in client
-        googleSignInClient = GoogleSignIn.getClient(MainActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
-
-        ViewToId();
-
-        welcome.setText("Welcome " + firebaseUser.getDisplayName() + "!");
-        welcome.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        //sign out method
-        signOut = findViewById(R.id.signout_button);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        finish();
-                    }
-                });
-            }
-        });
-
     }
 
-    private void ViewToId() {
-        welcome = findViewById(R.id.textview_welcome);
+    public void WelcomeText(FirebaseUser firebaseUser){
+        welcome.setText("Welcome " + firebaseUser.getDisplayName() + "!");
+        welcome.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 }
