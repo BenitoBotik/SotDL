@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
     private static OnItemClickListener mListener;
-    private final List<Character> characters;
+    private List<Character> characters;
 
     public CharacterAdapter(List<Character> characters) {
         this.characters = characters;
@@ -73,5 +73,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                 }
             });
         }
+    }
+    public void SetCharacters(List<Character> characters){
+        this.characters = characters;
     }
 }
