@@ -23,14 +23,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterCreationActivity extends AppCompatActivity {
-    private FirebaseFirestore db;
+    CharacterCreationPresenter presenter;
     private EditText editText_name;
     private EditText editText_level;
     private EditText editText_strength;
     private EditText editText_agility;
     private EditText editText_intellect;
     private EditText editText_will;
-    private String email;
     private ImageView iconImageView;
 
     @Override
@@ -38,18 +37,9 @@ public class CharacterCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_creation);
 
-        db = FirebaseFirestore.getInstance();
-
-        // Initialize firebase auth
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-        // Initialize firebase user
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        this.email = firebaseUser.getEmail();
-
         SetViews();
 
-        iconImageView = findViewById(R.id.character_icon_imageview);
+        presenter = new CharacterCreationPresenter(this);
     }
 
     private void SetViews() {
@@ -59,6 +49,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         editText_agility = findViewById(R.id.editText_agility);
         editText_intellect = findViewById(R.id.editText_intellect);
         editText_will = findViewById(R.id.editText_will);
+        iconImageView = findViewById(R.id.character_icon_imageview);
     }
 
     public void save(View view) {
@@ -70,24 +61,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String will = editText_will.getText().toString();
         String icon = iconImageView.toString();
 
-        // Create a new character
-        Character character = new Character(name, level, icon, strength, agility, intellect, will, this.email);
-
-        // Add a new document with a generated ID
-        db.collection("characters")
-                .add(character)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        presenter.SaveButtonClicked(name, level, icon, strength, agility, intellect, will);
 
         Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
         startActivity(intent);
