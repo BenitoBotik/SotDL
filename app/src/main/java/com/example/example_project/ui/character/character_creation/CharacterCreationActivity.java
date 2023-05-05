@@ -23,7 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterCreationActivity extends AppCompatActivity {
-    CharacterCreationPresenter presenter;
+    private CharacterCreationPresenter presenter;
     private EditText editText_name;
     private EditText editText_level;
     private EditText editText_strength;
