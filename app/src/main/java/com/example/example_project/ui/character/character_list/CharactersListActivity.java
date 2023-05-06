@@ -35,10 +35,7 @@ public class CharactersListActivity extends AppCompatActivity {
     private CharacterListPresenter presenter;
     private RecyclerView recyclerView;
     private ImageView addButton;
-    private FirebaseFirestore db;
     private CharacterAdapter characterAdapter;
-    private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
     private BottomNavigationView bottomNavigationView;
 
     @Override

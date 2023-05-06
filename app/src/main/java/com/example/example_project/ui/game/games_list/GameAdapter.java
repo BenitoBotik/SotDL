@@ -10,16 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
+import com.example.example_project.ui.character.Character;
 import com.example.example_project.ui.game.Game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
 
     private static GameAdapter.OnItemClickListener mListener;
-    private final ArrayList<Game> games;
+    private List<Game> games;
 
-    public GameAdapter(ArrayList<Game> games) {
+    public GameAdapter(List<Game> games) {
         this.games = games;
     }
 
@@ -72,5 +74,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
                 }
             });
         }
+    }
+
+    public void SetGames(List<Game> games){
+        this.games = games;
     }
 }

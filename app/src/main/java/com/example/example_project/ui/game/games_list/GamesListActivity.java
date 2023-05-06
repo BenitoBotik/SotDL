@@ -41,107 +41,33 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GamesListActivity extends AppCompatActivity {
-    private final ArrayList<Game> games = new ArrayList<>();
-    private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
-    private FirebaseFirestore db;
+    private GameListPresenter presenter;
     private GameAdapter gameAdapter;
     private RecyclerView recyclerView;
     private ImageView joinButton;
     private ImageView addButton;
-    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
 
-        // Initialize and assign variable
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+        SetViews();
 
-        // Set Home selected
-        bottomNavigationView.setSelectedItemId(R.id.menu_game);
-
-        // Perform item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch(item.getItemId())
-                {
-                    case R.id.menu_home:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.menu_game:
-                        return true;
-                    case R.id.menu_characters:
-                        startActivity(new Intent(getApplicationContext(),CharactersListActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        // Initialize firebase auth
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        // Initialize firebase user
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        // Initialize sign in client
-        googleSignInClient = GoogleSignIn.getClient(GamesListActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
-
-        email = firebaseUser.getEmail();
-
-        // set up the recycler view
-        recyclerView = findViewById(R.id.recycleview_chat);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // set up the adapter
-        gameAdapter = new GameAdapter(games);
-        recyclerView.setAdapter(gameAdapter);
-
-        // get the list of characters from the database
-        db = FirebaseFirestore.getInstance();
-        db.collection("games")
-                .whereArrayContains("players", email)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        //get the list of documents
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            //add the document to the list
-                            Game game = document.toObject(Game.class);
-                            game.setId(document.getId());
-                            games.add(game);
-                        }
-
-                        //notify the adapter that the data has changed
-                        gameAdapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "Error getting documents: ", e);
-                });
+        presenter = new GameListPresenter(this);
 
         gameAdapter.setOnItemClickListener(new GameAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Game game = games.get(position);
-                Intent intent = new Intent(GamesListActivity.this, GameActivity.class);
-                intent.putExtra("selected_game", game);
-                startActivity(intent);
+                presenter.GameClicked(position);
             }
         });
 
         // join a game
-        joinButton = findViewById(R.id.imageview_join_game);
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,42 +86,7 @@ public class GamesListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = input.getText().toString();
 
-                        //get document reference
-                        DocumentReference docRef = db.collection("games").document(name);
-
-                        // get document and update it
-                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document.exists()) {
-                                        //get the list of players
-                                        ArrayList<String> players = (ArrayList<String>) document.get("players");
-                                        //add the current player to the list
-                                        players.add(email);
-                                        //update the document
-                                        Map<String, Object> updates = new HashMap<>();
-                                        updates.put("players", players);
-                                        docRef.update(updates)
-                                                .addOnSuccessListener(aVoid -> {
-                                                    Toast.makeText(getApplicationContext(), "Player successfully added to the game!", Toast.LENGTH_SHORT).show();
-                                                    //add the game to the list
-                                                    Game game = document.toObject(Game.class);
-                                                    game.setId(document.getId());
-                                                    games.add(game);
-                                                    //notify the adapter that the data has changed
-                                                    gameAdapter.notifyDataSetChanged();
-                                                })
-                                                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error adding player", Toast.LENGTH_SHORT).show());
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "the game doesn't exist!", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Log.d(TAG, "get failed with ", task.getException());
-                                }
-                            }
-                        });
+                        presenter.JoinButtonClicked(name);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -210,7 +101,6 @@ public class GamesListActivity extends AppCompatActivity {
             }
         });
 
-        addButton = findViewById(R.id.imageview_add_game);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,30 +119,7 @@ public class GamesListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = input.getText().toString();
 
-                        ArrayList<String> players = new ArrayList<>();
-                        players.add(email);
-
-                        Game game = new Game(name, email, "Test Icon", players, null);
-
-                        // Add a new document with a generated ID
-                        db.collection("games")
-                                .add(game)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        game.setId(documentReference.getId());
-                                        games.add(game);
-                                        //notify the adapter that the data has changed
-                                        gameAdapter.notifyDataSetChanged();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                    }
-                                });
+                        presenter.CreateButtonClicked(name);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -266,5 +133,54 @@ public class GamesListActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    private void SetViews() {
+        // Initialize and assign variable
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        addButton = findViewById(R.id.imageview_add_game);
+
+        joinButton = findViewById(R.id.imageview_join_game);
+
+        // Set Home selected
+        bottomNavigationView.setSelectedItemId(R.id.menu_game);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.menu_home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.menu_game:
+                        return true;
+                    case R.id.menu_characters:
+                        startActivity(new Intent(getApplicationContext(), CharactersListActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        // set up the recycler view
+        recyclerView = findViewById(R.id.recycleview_chat);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    public void ShowGame(List<Game> games) {
+        gameAdapter.SetGames(games);
+        gameAdapter.notifyDataSetChanged();
+    }
+
+    public void SettingAdapter(List<Game> games) {
+        // set up the adapter
+        gameAdapter = new GameAdapter(games);
+        recyclerView.setAdapter(gameAdapter);
     }
 }

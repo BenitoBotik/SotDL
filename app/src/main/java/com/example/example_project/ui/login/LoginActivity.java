@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
     // Initialize variables
+    private LoginPresenter presenter;
     private SignInButton btSignIn;
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth firebaseAuth;
@@ -35,8 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Assign variables
-        btSignIn = findViewById(R.id.signInButton);
+        presenter = new LoginPresenter(this);
+
+        SetViews();
 
         // Initialize sign in options the client-id is copied form google-services.json file
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -68,6 +70,11 @@ public class LoginActivity extends AppCompatActivity {
             // Finish this activity
             finish();
         }
+    }
+
+    private void SetViews() {
+        // Assign variables
+        btSignIn = findViewById(R.id.signInButton);
     }
 
     @Override
