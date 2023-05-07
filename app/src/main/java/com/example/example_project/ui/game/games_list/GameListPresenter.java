@@ -113,7 +113,7 @@ public class GameListPresenter {
         ArrayList<String> players = new ArrayList<>();
         players.add(email);
 
-        Game game = new Game(name, email, "Test Icon", players, null);
+        Game game = new Game(name, email, "Test Icon", players, null, null);
 
         // Add a new document with a generated ID
         db.collection("games")

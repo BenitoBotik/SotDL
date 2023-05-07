@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +30,6 @@ public class GameActivity extends AppCompatActivity {
     private ImageView bucket;
     private FirebaseFirestore db;
     private DocumentReference docRef;
-    private List<Icon> icons;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
         idTextView.setText(game.getId());
 
         // get game layout
-        gameLayout = findViewById(R.id.textview_id);
+        gameLayout = findViewById(R.id.my_parent_layout);
         addIcon = findViewById(R.id.imageview_add_icon);
         bucket = findViewById(R.id.imageview_bucket);
 
@@ -91,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
                                 float newY = event.getRawY() + dY;
 
                                 // Get the boundaries of the parent ConstraintLayout
-                                ConstraintLayout parentLayout = findViewById(R.id.textview_id);
+                                ConstraintLayout parentLayout = findViewById(R.id.my_parent_layout);
                                 int parentWidth = parentLayout.getWidth();
                                 int parentHeight = parentLayout.getHeight();
 
@@ -128,6 +128,49 @@ public class GameActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+            }
+        });
+
+        //update button is clicked
+        // Set up the button
+        Button button = findViewById(R.id.button_update);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the parent layout
+                ConstraintLayout parentLayout = findViewById(R.id.my_parent_layout);
+
+                // Create the list to hold the icons
+                ArrayList<Icon> icons = new ArrayList<>();
+
+                // Loop over all the child views
+                for (int i = 0; i < parentLayout.getChildCount(); i++) {
+                    View childView = parentLayout.getChildAt(i);
+
+                    // Skip the two imageviews with the same ids and positions
+                    if (childView.getId() == R.id.imageview_bucket || childView.getId() == R.id.imageview_add_icon) {
+                        continue;
+                    }
+
+                    // Get the position of the child view
+                    ConstraintSet constraintSet = new ConstraintSet();
+                    constraintSet.clone(parentLayout);
+                    constraintSet.constrainWidth(childView.getId(), childView.getWidth());
+                    constraintSet.constrainHeight(childView.getId(), childView.getHeight());
+                    constraintSet.connect(childView.getId(), ConstraintSet.TOP, parentLayout.getId(), ConstraintSet.TOP, 0);
+                    constraintSet.connect(childView.getId(), ConstraintSet.LEFT, parentLayout.getId(), ConstraintSet.LEFT, 0);
+                    constraintSet.applyTo(parentLayout);
+
+                    float x = childView.getX();
+                    float y = childView.getY();
+
+                    // Create an icon and add it to the list
+                    Icon icon = new Icon("icon3", x, y);
+                    icons.add(icon);
+                }
+
+                // Do something with the list of icons
+                Game newGame = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId(), icons);
             }
         });
     }

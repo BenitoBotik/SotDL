@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textview_id"
+    android:id="@+id/my_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_map"
@@ -38,5 +38,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageview_add_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/bucket_closed" />
+
+    <Button
+        android:id="@+id/button_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/joti_one"
+        android:text="update"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_add_icon"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_bucket"
+        app:layout_constraintStart_toEndOf="@+id/imageview_add_icon"
+        app:layout_constraintTop_toTopOf="@+id/imageview_add_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

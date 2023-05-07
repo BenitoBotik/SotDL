@@ -2,14 +2,14 @@ package com.example.example_project.ui.game;
 
 public class Icon {
     private String image;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     // keep this constructor empty for Firebase
     public Icon() {
     }
 
-    public Icon(String image, int x, int y) {
+    public Icon(String image, float x, float y) {
         this.image = image;
         this.x = x;
         this.y = y;
@@ -19,11 +19,11 @@ public class Icon {
         return image;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
@@ -31,11 +31,11 @@ public class Icon {
         this.image = image;
     }
 
-    public void SetX(int x) {
+    public void SetX(float x) {
         this.x = x;
     }
 
-    public void SetY(int y) {
+    public void SetY(float y) {
         this.y = y;
     }
 }
