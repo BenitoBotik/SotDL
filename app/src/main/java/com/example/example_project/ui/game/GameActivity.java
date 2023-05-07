@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView bucket;
     private FirebaseFirestore db;
     private DocumentReference docRef;
+    private List<Icon> icons;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
