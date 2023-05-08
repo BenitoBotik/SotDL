@@ -51,6 +51,29 @@ public class GameActivity extends AppCompatActivity {
         addIcon = findViewById(R.id.imageview_add_icon);
         bucket = findViewById(R.id.imageview_bucket);
 
+        ArrayList<Icon> icons = game.getIcons();
+
+        // loop through list of image objects and create ImageView for each one
+        for (Icon icon : icons) {
+            ImageView imageView = new ImageView(this);
+            int resourceId = getResources().getIdentifier(icon.getImage(), "drawable", getPackageName());
+            imageView.setImageResource(resourceId);
+
+            // set layout params for image view
+            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            );
+            layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.horizontalBias = icon.getX() / ConstraintLayout.LayoutParams.MATCH_PARENT;
+            layoutParams.verticalBias = icon.getY() / ConstraintLayout.LayoutParams.MATCH_PARENT;
+
+            // add image view to layout
+            ConstraintLayout layout = findViewById(R.id.my_parent_layout);
+            layout.addView(imageView, layoutParams);
+        }
+
         // add a movable icon to game layout
         addIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +164,7 @@ public class GameActivity extends AppCompatActivity {
                 ConstraintLayout parentLayout = findViewById(R.id.my_parent_layout);
 
                 // Create the list to hold the icons
-                ArrayList<Icon> icons = new ArrayList<>();
+                ArrayList<Icon> newIcons = new ArrayList<>();
 
                 // Loop over all the child views
                 for (int i = 0; i < parentLayout.getChildCount(); i++) {
@@ -166,11 +189,11 @@ public class GameActivity extends AppCompatActivity {
 
                     // Create an icon and add it to the list
                     Icon icon = new Icon("icon3", x, y);
-                    icons.add(icon);
+                    newIcons.add(icon);
                 }
 
                 // Do something with the list of icons
-                Game newGame = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId(), icons);
+                Game newGame = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId(), newIcons);
 
                 //update the game in the database
                 docRef.set(newGame);

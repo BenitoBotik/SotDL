@@ -137,9 +137,13 @@ public class GameListPresenter {
     }
 
     public void GameClicked(int position){
+        try {
         Game game = games.get(position);
         Intent intent = new Intent(view, GameActivity.class);
         intent.putExtra("selected_game", game);
         view.startActivity(intent);
+        } catch (Exception e) {
+            Log.d(TAG, "Error getting game: ", e);
+        }
     }
 }
