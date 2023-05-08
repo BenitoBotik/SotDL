@@ -56,9 +56,9 @@ public class GameListPresenter {
                         //get the list of documents
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             //add the document to the list
-                            Game game = document.toObject(Game.class);
-                            game.setId(document.getId());
-                            games.add(game);
+                                Game game = document.toObject(Game.class); //this line bugs the code
+                                game.setId(document.getId());
+                                games.add(game);
                         }
 
                         //notify the adapter that the data has changed

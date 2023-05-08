@@ -12,7 +12,7 @@ public class Game implements Serializable {
     private ArrayList<Icon> icons;
 
     // keep this constructor empty for Firebase
-    public Game(ArrayList<Icon> icons) {
+    public Game() {
     }
 
     public Game(String name, String gm, String map, ArrayList<String> players, String id, ArrayList<Icon> icons) {
