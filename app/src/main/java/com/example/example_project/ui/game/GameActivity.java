@@ -148,7 +148,7 @@ public class GameActivity extends AppCompatActivity {
                     View childView = parentLayout.getChildAt(i);
 
                     // Skip the two imageviews with the same ids and positions
-                    if (childView.getId() == R.id.imageview_bucket || childView.getId() == R.id.imageview_add_icon) {
+                    if (childView.getId() == R.id.imageview_bucket || childView.getId() == R.id.imageview_add_icon || childView.getId() == R.id.id_textview || childView.getId() == R.id.button_update) {
                         continue;
                     }
 
@@ -171,6 +171,9 @@ public class GameActivity extends AppCompatActivity {
 
                 // Do something with the list of icons
                 Game newGame = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId(), icons);
+
+                //update the game in the database
+                docRef.set(newGame);
             }
         });
     }
