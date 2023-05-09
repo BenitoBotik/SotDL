@@ -1,6 +1,8 @@
 package com.example.example_project.ui.game;
 
-public class Icon {
+import java.io.Serializable;
+
+public class Icon implements Serializable {
     private String image;
     private float x;
     private float y;

@@ -56,9 +56,9 @@ public class GameListPresenter {
                         //get the list of documents
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             //add the document to the list
-                                Game game = document.toObject(Game.class); //this line bugs the code
-                                game.setId(document.getId());
-                                games.add(game);
+                            Game game = document.toObject(Game.class); //this line bugs the code
+                            game.setId(document.getId());
+                            games.add(game);
                         }
 
                         //notify the adapter that the data has changed
@@ -70,7 +70,7 @@ public class GameListPresenter {
                 });
     }
 
-    public void JoinButtonClicked(String name){
+    public void JoinButtonClicked(String name) {
         //get document reference
         DocumentReference docRef = db.collection("games").document(name);
 
@@ -109,7 +109,7 @@ public class GameListPresenter {
         });
     }
 
-    public void CreateButtonClicked(String name){
+    public void CreateButtonClicked(String name) {
         ArrayList<String> players = new ArrayList<>();
         players.add(email);
 
@@ -136,12 +136,12 @@ public class GameListPresenter {
                 });
     }
 
-    public void GameClicked(int position){
+    public void GameClicked(int position) {
         try {
-        Game game = games.get(position);
-        Intent intent = new Intent(view, GameActivity.class);
-        intent.putExtra("selected_game", game);
-        view.startActivity(intent);
+            Game game = games.get(position);
+            Intent intent = new Intent(view, GameActivity.class);
+            intent.putExtra("selected_game", game);
+            view.startActivity(intent);
         } catch (Exception e) {
             Log.d(TAG, "Error getting game: ", e);
         }

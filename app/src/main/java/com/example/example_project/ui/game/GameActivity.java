@@ -54,24 +54,26 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Icon> icons = game.getIcons();
 
         // loop through list of image objects and create ImageView for each one
-        for (Icon icon : icons) {
-            ImageView imageView = new ImageView(this);
-            int resourceId = getResources().getIdentifier(icon.getImage(), "drawable", getPackageName());
-            imageView.setImageResource(resourceId);
+        if (icons != null) {
+            for (Icon icon : icons) {
+                ImageView imageView = new ImageView(this);
+                int resourceId = getResources().getIdentifier(icon.getImage(), "drawable", getPackageName());
+                imageView.setImageResource(resourceId);
 
-            // set layout params for image view
-            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT
-            );
-            layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-            layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-            layoutParams.horizontalBias = icon.getX() / ConstraintLayout.LayoutParams.MATCH_PARENT;
-            layoutParams.verticalBias = icon.getY() / ConstraintLayout.LayoutParams.MATCH_PARENT;
+                // set layout params for image view
+                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT
+                );
+                layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+                layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+                layoutParams.horizontalBias = icon.getX() / ConstraintLayout.LayoutParams.MATCH_PARENT;
+                layoutParams.verticalBias = icon.getY() / ConstraintLayout.LayoutParams.MATCH_PARENT;
 
-            // add image view to layout
-            ConstraintLayout layout = findViewById(R.id.my_parent_layout);
-            layout.addView(imageView, layoutParams);
+                // add image view to layout
+                ConstraintLayout layout = findViewById(R.id.my_parent_layout);
+                layout.addView(imageView, layoutParams);
+            }
         }
 
         // add a movable icon to game layout
@@ -97,60 +99,7 @@ public class GameActivity extends AppCompatActivity {
                 constraintSet.applyTo(gameLayout);
 
                 // Set an OnTouchListener to handle touch events on the ImageView
-                currentIcon.setOnTouchListener(new View.OnTouchListener() {
-                    float dX, dY;
-
-                    @Override
-                    public boolean onTouch(View view, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                // Get the initial touch position
-                                dX = view.getX() - event.getRawX();
-                                dY = view.getY() - event.getRawY();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                // Update the position of the ImageView based on touch events
-                                float newX = event.getRawX() + dX;
-                                float newY = event.getRawY() + dY;
-
-                                // Get the boundaries of the parent ConstraintLayout
-                                ConstraintLayout parentLayout = findViewById(R.id.my_parent_layout);
-                                int parentWidth = parentLayout.getWidth();
-                                int parentHeight = parentLayout.getHeight();
-
-                                // Adjust the position of the ImageView to stay within the boundaries
-                                newX = Math.max(0, Math.min(newX, parentWidth - view.getWidth()));
-                                newY = Math.max(0, Math.min(newY, parentHeight - view.getHeight()));
-
-                                view.animate()
-                                        .x(newX)
-                                        .y(newY)
-                                        .setDuration(0)
-                                        .start();
-
-                                // Check if the ImageView is overlapping the Bucket view
-                                if (isViewOverlapping(currentIcon, bucket)) {
-                                    // If the ImageView is overlapping, change the Bucket to an open bucket
-                                    bucket.setImageResource(R.drawable.bucket_opened);
-                                } else {
-                                    // Otherwise, change the Bucket back to a closed bucket
-                                    bucket.setImageResource(R.drawable.bucket_closed);
-                                }
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                // When the touch gesture is released, check if the ImageView is over the Bucket view
-                                if (isViewOverlapping(currentIcon, bucket)) {
-                                    // If it is, delete the ImageView and change the Bucket back to a closed bucket
-                                    ((ViewGroup) currentIcon.getParent()).removeView(currentIcon);
-                                    bucket.setImageResource(R.drawable.bucket_closed);
-                                }
-                                break;
-                            default:
-                                return false;
-                        }
-                        return true;
-                    }
-                });
+                currentIcon.setOnTouchListener(new TouchHandler(findViewById(R.id.my_parent_layout), currentIcon, bucket));
             }
         });
 
@@ -199,14 +148,5 @@ public class GameActivity extends AppCompatActivity {
                 docRef.set(newGame);
             }
         });
-    }
-
-    // Helper function to check if two views are overlapping
-    public static boolean isViewOverlapping(View firstView, View secondView) {
-        Rect firstRect = new Rect();
-        firstView.getHitRect(firstRect);
-        Rect secondRect = new Rect();
-        secondView.getHitRect(secondRect);
-        return Rect.intersects(firstRect, secondRect);
     }
 }
