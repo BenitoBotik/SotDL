@@ -142,6 +142,9 @@ public class GameListPresenter {
             Intent intent = new Intent(view, GameActivity.class);
             intent.putExtra("selected_game", game);
             view.startActivity(intent);
+
+            // reload the activity
+            view.finish();
         } catch (Exception e) {
             Log.d(TAG, "Error getting game: ", e);
         }

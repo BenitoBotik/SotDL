@@ -141,11 +141,11 @@ public class GameActivity extends AppCompatActivity {
                     newIcons.add(icon);
                 }
 
-                // Do something with the list of icons
-                Game newGame = new Game(game.getName(), game.getGm(), game.getMap(), game.getPlayers(), game.getId(), newIcons);
+                // update game icons
+                game.setIcons(newIcons);
 
-                //update the game in the database
-                docRef.set(newGame);
+                // update the game in the database
+                docRef.set(game);
             }
         });
     }

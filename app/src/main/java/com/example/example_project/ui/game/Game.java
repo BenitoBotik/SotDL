@@ -51,4 +51,8 @@ public class Game implements Serializable {
     public ArrayList<Icon> getIcons() {
         return icons;
     }
+
+    public void setIcons(ArrayList<Icon> icons) {
+        this.icons = icons;
+    }
 }
