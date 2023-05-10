@@ -1,4 +1,4 @@
-package com.example.example_project.ui.game;
+package com.example.example_project.ui.model;
 
 import android.graphics.Rect;
 import android.view.MotionEvent;

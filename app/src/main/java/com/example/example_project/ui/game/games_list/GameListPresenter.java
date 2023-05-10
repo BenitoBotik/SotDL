@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.example_project.ui.game.Game;
+import com.example.example_project.ui.model.Game;
 import com.example.example_project.ui.game.GameActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

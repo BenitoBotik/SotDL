@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.model.Character;
 
 import java.util.List;
 

@@ -1,22 +1,15 @@
 package com.example.example_project.ui.character;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.example_project.ui.model.Character;
 
 public class CharacterActivity extends AppCompatActivity {
     private CharacterPresenter presenter;

@@ -1,26 +1,15 @@
 package com.example.example_project.ui.character.character_creation;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.example_project.ui.character.Character;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterCreationActivity extends AppCompatActivity {
     private CharacterCreationPresenter presenter;

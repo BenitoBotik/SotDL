@@ -1,10 +1,7 @@
 package com.example.example_project.ui.character.character_list;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -14,21 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character.CharacterActivity;
-import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.model.Character;
 import com.example.example_project.ui.character.character_creation.CharacterCreationActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
 import com.example.example_project.ui.main_page.MainActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharactersListActivity extends AppCompatActivity {

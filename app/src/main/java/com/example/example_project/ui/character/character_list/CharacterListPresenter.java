@@ -5,7 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.example_project.ui.character.Character;
+import com.example.example_project.ui.model.Character;
 import com.example.example_project.ui.character.CharacterActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

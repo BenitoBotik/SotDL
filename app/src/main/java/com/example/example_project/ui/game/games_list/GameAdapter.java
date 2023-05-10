@@ -10,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
-import com.example.example_project.ui.character.Character;
-import com.example.example_project.ui.game.Game;
+import com.example.example_project.ui.model.Game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {

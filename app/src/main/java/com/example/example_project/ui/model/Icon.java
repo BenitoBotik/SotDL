@@ -1,4 +1,4 @@
-package com.example.example_project.ui.game;
+package com.example.example_project.ui.model;
 
 import java.io.Serializable;
 
