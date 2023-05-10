@@ -2,6 +2,8 @@ package com.example.example_project.ui.character.character_creation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +21,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_agility;
     private EditText editText_intellect;
     private EditText editText_will;
-    private ImageView iconImageView;
+    private ImageView characterImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,24 @@ public class CharacterCreationActivity extends AppCompatActivity {
         editText_agility = findViewById(R.id.editText_agility);
         editText_intellect = findViewById(R.id.editText_intellect);
         editText_will = findViewById(R.id.editText_will);
-        iconImageView = findViewById(R.id.character_icon_imageview);
+        characterImage = findViewById(R.id.character_icon_imageview);
+    }
+
+    public void changeCharacterIcon(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose a Character");
+
+        final int[] iconIds = {R.drawable.icon0, R.drawable.icon1, R.drawable.icon2, R.drawable.icon3, R.drawable.icon4, R.drawable.icon5};
+        CharSequence[] iconNames = {"Clockwork", "Dwarf", "Changeling", "Human", "Goblin", "Orc"};
+
+        builder.setItems(iconNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                characterImage.setImageResource(iconIds[which]);
+            }
+        });
+
+        builder.show();
     }
 
     public void save(View view) {
@@ -48,7 +67,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String agility = editText_agility.getText().toString();
         String intellect = editText_intellect.getText().toString();
         String will = editText_will.getText().toString();
-        String icon = iconImageView.toString();
+        String icon = characterImage.toString();
 
         presenter.SaveButtonClicked(name, level, icon, strength, agility, intellect, will);
 
@@ -62,7 +81,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         // If the request code is 1 and the result code is OK
         if (requestCode == 1 && resultCode == RESULT_OK) {
             // Get the data from the intent
-            iconImageView.setImageURI(data.getData());
+            characterImage.setImageURI(data.getData());
         }
     }
 }

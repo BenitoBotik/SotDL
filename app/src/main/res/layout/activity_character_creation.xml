@@ -30,7 +30,8 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon0" />
+        app:srcCompat="@drawable/icon0"
+        android:onClick="changeCharacterIcon"/>
 
     <EditText
         android:id="@+id/editText_strength"
