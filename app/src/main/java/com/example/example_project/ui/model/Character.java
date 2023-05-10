@@ -6,7 +6,7 @@ public class Character implements Serializable {
 
     private String name;
     private String level;
-    private String icon;
+    private int icon;
     private String strength;
     private String agility;
     private String intellect;
@@ -18,7 +18,7 @@ public class Character implements Serializable {
     public Character() {
     }
 
-    public Character(String name, String level, String icon, String strength, String agility, String intellect, String will, String email){
+    public Character(String name, String level, int icon, String strength, String agility, String intellect, String will, String email){
         this.name = name;
         this.level = level;
         this.icon = icon;
@@ -37,7 +37,7 @@ public class Character implements Serializable {
         return level;
     }
 
-    public String getIcon() {
+    public int getIcon() {
         return icon;
     }
 

@@ -22,6 +22,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_intellect;
     private EditText editText_will;
     private ImageView characterImage;
+    private int icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         editText_intellect = findViewById(R.id.editText_intellect);
         editText_will = findViewById(R.id.editText_will);
         characterImage = findViewById(R.id.character_icon_imageview);
+        icon = R.drawable.icon0;
     }
 
     public void changeCharacterIcon(View view) {
@@ -54,6 +56,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 characterImage.setImageResource(iconIds[which]);
+                icon = iconIds[which];
             }
         });
 
@@ -67,7 +70,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String agility = editText_agility.getText().toString();
         String intellect = editText_intellect.getText().toString();
         String will = editText_will.getText().toString();
-        String icon = characterImage.toString();
 
         presenter.SaveButtonClicked(name, level, icon, strength, agility, intellect, will);
 

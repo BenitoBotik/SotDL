@@ -32,7 +32,7 @@ public class CharacterCreationPresenter {
         this.email = firebaseUser.getEmail();
     }
 
-    public void SaveButtonClicked(String name, String level, String icon, String strength, String agility, String intellect, String will){
+    public void SaveButtonClicked(String name, String level, int icon, String strength, String agility, String intellect, String will){
         // Create a new character
         Character character = new Character(name, level, icon, strength, agility, intellect, will, this.email);
 

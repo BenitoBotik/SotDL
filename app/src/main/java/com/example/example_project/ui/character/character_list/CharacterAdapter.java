@@ -38,7 +38,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         Character currentCharacter = characters.get(position);
         holder.nameTextView.setText(currentCharacter.getName());
         holder.levelTextView.setText(currentCharacter.getLevel());
-        holder.iconImageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentCharacter.getIcon(), "drawable", holder.nameTextView.getContext().getPackageName()));
+        holder.iconImageView.setImageResource(currentCharacter.getIcon());
     }
 
     @Override
