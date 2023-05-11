@@ -94,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         // create a new game icon of size 64x64
                         ImageView currentIcon = new ImageView(GameActivity.this);
-                        currentIcon.setImageResource(R.drawable.icon3);
+                        currentIcon.setImageResource(R.drawable.avatar);
                         currentIcon.setLayoutParams(new ViewGroup.LayoutParams(64, 64));
 
                         // Set the ImageView's id
@@ -151,7 +151,7 @@ public class GameActivity extends AppCompatActivity {
                             float y = childView.getY();
 
                             // Create an icon and add it to the list
-                            Icon icon = new Icon("icon3", x, y);
+                            Icon icon = new Icon("avatar", x, y);
                             newIcons.add(icon);
                         }
 
