@@ -11,6 +11,7 @@ import com.example.example_project.R;
 import com.example.example_project.ui.model.Game;
 import com.example.example_project.ui.model.Icon;
 import com.example.example_project.ui.model.TouchHandler;
+import com.example.example_project.ui.persistance.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 public class GamePresenter {
     private GameActivity view;
     private FirebaseFirestore db;
-    private DocumentReference docRef;
     private String email;
     private String gm;
     private Game game;
@@ -30,9 +30,6 @@ public class GamePresenter {
         this.view = view;
 
         game = (Game) view.getIntent().getSerializableExtra("selected_game");
-
-        db = FirebaseFirestore.getInstance();
-        docRef = db.collection("games").document(game.getId());
 
         // Initialize firebase auth
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -140,6 +137,6 @@ public class GamePresenter {
         game.setIcons(newIcons);
 
         // update the game in the database
-        docRef.set(game);
+        Repository.getInstance().UpdateGame(game);
     }
 }

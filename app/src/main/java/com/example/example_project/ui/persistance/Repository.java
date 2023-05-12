@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.MotionEffect;
 
+import com.example.example_project.ui.model.Game;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -99,5 +100,12 @@ public class Repository {
                 .addOnFailureListener(e -> {
                     Log.d(TAG, "Error getting documents: ", e);
                 });
+    }
+
+    public void UpdateGame(Game game){
+        db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("games").document(game.getId());
+
+        docRef.set(game);
     }
 }
