@@ -23,6 +23,7 @@ public class Repository {
     private static Repository instance;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     LoadCharactersListener charactersListener;
+    LoadGamesListener gamesListener;
 
     private Repository() {
     }
@@ -38,8 +39,16 @@ public class Repository {
         void updateCharacters(List<Character> characters);
     }
 
+    public interface LoadGamesListener {
+        void updateGames(List<Game> games);
+    }
+
     public void setCharactersListener(LoadCharactersListener listener) {
         this.charactersListener = listener;
+    }
+
+    public void setGamesListener(LoadGamesListener listener) {
+        this.gamesListener = listener;
     }
 
     public void Delete(Character character){
@@ -95,6 +104,30 @@ public class Repository {
                         }
 
                         charactersListener.updateCharacters(characters);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "Error getting documents: ", e);
+                });
+    }
+
+    public void GetGames(String email){
+        db.collection("games")
+                .whereArrayContains("players", email)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        List<Game> games = new ArrayList<>();
+                        //get the list of documents
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            //add the document to the list
+                            Game game = document.toObject(Game.class); //this line bugs the code
+                            game.setId(document.getId());
+                            games.add(game);
+                        }
+
+                        //notify the adapter that the data has changed
+                        gamesListener.updateGames(games);
                     }
                 })
                 .addOnFailureListener(e -> {

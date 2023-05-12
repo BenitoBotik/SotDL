@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.example.example_project.ui.model.Game;
 import com.example.example_project.ui.game.GameActivity;
+import com.example.example_project.ui.persistance.Repository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,9 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameListPresenter {
+public class GameListPresenter implements Repository.LoadGamesListener {
     private GamesListActivity view;
-    private final List<Game> games = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
     private String email;
@@ -47,27 +48,8 @@ public class GameListPresenter {
         email = firebaseUser.getEmail();
 
         // get the list of characters from the database
-        db = FirebaseFirestore.getInstance();
-        db.collection("games")
-                .whereArrayContains("players", email)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        //get the list of documents
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            //add the document to the list
-                            Game game = document.toObject(Game.class); //this line bugs the code
-                            game.setId(document.getId());
-                            games.add(game);
-                        }
-
-                        //notify the adapter that the data has changed
-                        view.ShowGame(games);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "Error getting documents: ", e);
-                });
+        Repository.getInstance().setGamesListener(this);
+        Repository.getInstance().GetGames(email);
     }
 
     public void JoinButtonClicked(String name) {
@@ -148,5 +130,11 @@ public class GameListPresenter {
         } catch (Exception e) {
             Log.d(TAG, "Error getting game: ", e);
         }
+    }
+
+    @Override
+    public void updateGames(List<Game> games) {
+        this.games = games;
+        view.ShowGame(games);
     }
 }
