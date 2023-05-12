@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.example_project.ui.model.Character;
+import com.example.example_project.ui.persistance.Repository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,19 +38,6 @@ public class CharacterCreationPresenter {
         Character character = new Character(name, level, icon, strength, agility, intellect, will, this.email);
 
         // Add a new document with a generated ID
-        db.collection("characters")
-                .add(character)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        Repository.getInstance().AddCharacter(character);
     }
 }
