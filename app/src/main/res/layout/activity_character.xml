@@ -15,10 +15,10 @@
         android:fontFamily="@font/joti_one"
         android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="@+id/character_imageview"
         app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintStart_toStartOf="@+id/character_imageview"
+        app:layout_constraintTop_toBottomOf="@+id/character_imageview" />
 
     <Button
         android:id="@+id/button_delete_character"
@@ -126,7 +126,7 @@
         app:srcCompat="@drawable/will_icon" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/character_imageview"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="8dp"

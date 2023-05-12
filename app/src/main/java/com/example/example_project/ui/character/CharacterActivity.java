@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.example_project.R;
@@ -18,6 +19,7 @@ public class CharacterActivity extends AppCompatActivity {
     private TextView agilityTextView;
     private TextView intellectTextView;
     private TextView willTextView;
+    private ImageView characterImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class CharacterActivity extends AppCompatActivity {
         agilityTextView = findViewById(R.id.textview_agility);
         intellectTextView = findViewById(R.id.textview_intellect);
         willTextView = findViewById(R.id.textview_will);
+        characterImageView = findViewById(R.id.character_imageview);
 
         Character character = (Character) getIntent().getSerializableExtra("selected_character");
 
@@ -43,6 +46,7 @@ public class CharacterActivity extends AppCompatActivity {
         agilityTextView.setText(String.valueOf(character.getAgility()));
         intellectTextView.setText(String.valueOf(character.getIntellect()));
         willTextView.setText(String.valueOf(character.getWill()));
+        characterImageView.setImageResource(character.getIcon());
 
         presenter.GetDocument(character);
     }
