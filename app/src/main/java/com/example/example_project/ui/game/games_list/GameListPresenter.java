@@ -39,6 +39,9 @@ public class GameListPresenter implements Repository.LoadGamesListener {
 
         view.SettingAdapter(games);
 
+        // Initialize firebase firestore
+        db = FirebaseFirestore.getInstance();
+
         // Initialize firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
 
