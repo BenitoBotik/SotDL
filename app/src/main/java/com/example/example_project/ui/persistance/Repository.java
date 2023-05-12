@@ -141,4 +141,27 @@ public class Repository {
 
         docRef.set(game);
     }
+
+    public void AddGame(List<Game> games, Game game){
+        // Add a new document with a generated ID
+        db.collection("games")
+                .add(game)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        game.setId(documentReference.getId());
+                        games.add(game);
+
+                        //notify the adapter that the data has changed
+                        gamesListener.updateGames(games);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
 }

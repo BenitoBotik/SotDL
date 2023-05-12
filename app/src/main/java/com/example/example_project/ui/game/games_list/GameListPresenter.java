@@ -97,25 +97,7 @@ public class GameListPresenter implements Repository.LoadGamesListener {
 
         Game game = new Game(name, email, "Test Icon", players, null, null);
 
-        // Add a new document with a generated ID
-        db.collection("games")
-                .add(game)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        game.setId(documentReference.getId());
-                        games.add(game);
-                        //notify the adapter that the data has changed
-                        view.ShowGame(games);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        Repository.getInstance().AddGame(this.games, game);
     }
 
     public void GameClicked(int position) {
