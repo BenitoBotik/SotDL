@@ -16,14 +16,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterCreationPresenter {
-    CharacterCreationActivity view;
-    private FirebaseFirestore db;
+    private CharacterCreationActivity view;
     private String email;
 
     public CharacterCreationPresenter(CharacterCreationActivity view) {
         this.view = view;
-
-        db = FirebaseFirestore.getInstance();
 
         // Initialize firebase auth
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
