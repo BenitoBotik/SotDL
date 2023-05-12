@@ -7,39 +7,25 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.example_project.ui.model.Character;
+import com.example.example_project.ui.persistance.Repository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterPresenter {
-    CharacterActivity view;
-    private DocumentReference docRef;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CharacterActivity view;
+    private Character character;
 
     public CharacterPresenter(CharacterActivity view) {
         this.view = view;
-    }
 
-    public void GetDocument(Character character){
-        docRef = db.collection("characters").document(character.getId());
+        character = (Character) view.getIntent().getSerializableExtra("selected_character");
+
+        view.AttachCharacterToView(character);
     }
 
     public void DeleteButtonClicked(){
-        docRef.delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Document successfully deleted
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Log the error message
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+        Repository.getInstance().Delete(character);
     }
 }

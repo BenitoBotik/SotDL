@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.helper.widget.MotionEffect;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,26 @@ public class Repository {
 
     public void setCharactersListener(LoadCharactersListener listener) {
         this.charactersListener = listener;
+    }
+
+    public void Delete(Character character){
+        DocumentReference docRef = db.collection("characters").document(character.getId());
+
+        docRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Document successfully deleted
+                        Log.d(MotionEffect.TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Log the error message
+                        Log.w(MotionEffect.TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     public void AddCharacter(Character character) {

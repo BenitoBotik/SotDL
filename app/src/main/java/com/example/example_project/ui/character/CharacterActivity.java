@@ -26,9 +26,9 @@ public class CharacterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
 
-        presenter = new CharacterPresenter(this);
-
         SetViews();
+
+        presenter = new CharacterPresenter(this);
     }
 
     private void SetViews() {
@@ -38,17 +38,6 @@ public class CharacterActivity extends AppCompatActivity {
         intellectTextView = findViewById(R.id.textview_intellect);
         willTextView = findViewById(R.id.textview_will);
         characterImageView = findViewById(R.id.character_imageview);
-
-        Character character = (Character) getIntent().getSerializableExtra("selected_character");
-
-        nameTextView.setText(character.getName());
-        strengthTextView.setText(String.valueOf(character.getStrength()));
-        agilityTextView.setText(String.valueOf(character.getAgility()));
-        intellectTextView.setText(String.valueOf(character.getIntellect()));
-        willTextView.setText(String.valueOf(character.getWill()));
-        characterImageView.setImageResource(character.getIcon());
-
-        presenter.GetDocument(character);
     }
 
     public void DeleteCharacter(View view) {
@@ -56,5 +45,14 @@ public class CharacterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CharactersListActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void AttachCharacterToView(Character character){
+        nameTextView.setText(character.getName());
+        strengthTextView.setText(String.valueOf(character.getStrength()));
+        agilityTextView.setText(String.valueOf(character.getAgility()));
+        intellectTextView.setText(String.valueOf(character.getIntellect()));
+        willTextView.setText(String.valueOf(character.getWill()));
+        characterImageView.setImageResource(character.getIcon());
     }
 }
