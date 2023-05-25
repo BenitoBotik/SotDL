@@ -14,6 +14,11 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        return null;
+        return Result.success();
+    }
+
+    @Override
+    public void onStopped() {
+        super.onStopped();
     }
 }
