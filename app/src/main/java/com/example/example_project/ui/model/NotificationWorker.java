@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-public class MyWorker extends Worker {
-    public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+public class NotificationWorker extends Worker {
+    public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
