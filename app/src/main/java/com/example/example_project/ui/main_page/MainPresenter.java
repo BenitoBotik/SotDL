@@ -25,7 +25,6 @@ public class MainPresenter {
     private MainActivity view;
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
-    private DocumentReference docRef;
 
     public MainPresenter(MainActivity view) {
         this.view = view;

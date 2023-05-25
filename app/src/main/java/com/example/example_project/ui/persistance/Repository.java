@@ -121,7 +121,7 @@ public class Repository {
                         //get the list of documents
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             //add the document to the list
-                            Game game = document.toObject(Game.class); //this line bugs the code
+                            Game game = document.toObject(Game.class);
                             game.setId(document.getId());
                             games.add(game);
                         }
