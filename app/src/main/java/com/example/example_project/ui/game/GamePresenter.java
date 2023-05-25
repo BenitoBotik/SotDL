@@ -1,8 +1,14 @@
 package com.example.example_project.ui.game;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -38,10 +44,6 @@ public class GamePresenter {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         email = firebaseUser.getEmail();
         gm = game.getGm();
-    }
-
-    public String SetIdText() {
-        return game.getId();
     }
 
     public void AddAllIcons(ConstraintLayout gameLayout, ImageView bucket){
@@ -138,5 +140,12 @@ public class GamePresenter {
 
         // update the game in the database
         Repository.getInstance().UpdateGame(game);
+    }
+
+    public void CopyToClipboard(Context context) {
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("Copied Code", game.getId());
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(view, "Code copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 }

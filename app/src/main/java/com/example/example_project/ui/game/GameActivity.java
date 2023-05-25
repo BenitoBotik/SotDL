@@ -44,7 +44,13 @@ public class GameActivity extends AppCompatActivity {
     private void SetViews() {
         // show game id in textview
         idTextView = findViewById(R.id.id_textview);
-        idTextView.setText(presenter.SetIdText());
+        idTextView.setText("Click for Private Code");
+        idTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.CopyToClipboard(GameActivity.this);
+            }
+        });
 
         // get game layout
         gameLayout = findViewById(R.id.my_parent_layout);
