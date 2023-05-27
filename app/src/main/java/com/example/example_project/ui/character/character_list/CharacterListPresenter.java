@@ -22,7 +22,6 @@ import java.util.List;
 public class CharacterListPresenter implements Repository.LoadCharactersListener{
     private CharactersListActivity view;
     private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
     private List<Character> characters = new ArrayList<>();
     public CharacterListPresenter(CharactersListActivity view) {
         this.view = view;
@@ -37,9 +36,6 @@ public class CharacterListPresenter implements Repository.LoadCharactersListener
 
         // Get the user's email
         String email = firebaseUser.getEmail();
-
-        // Initialize sign in client
-        googleSignInClient = GoogleSignIn.getClient(view, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         // get the list of characters from the database
         Repository.getInstance().setCharactersListener(this);
