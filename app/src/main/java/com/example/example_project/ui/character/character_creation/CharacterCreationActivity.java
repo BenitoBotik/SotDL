@@ -76,14 +76,4 @@ public class CharacterCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
         startActivity(intent);
     }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // If the request code is 1 and the result code is OK
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Get the data from the intent
-            characterImage.setImageURI(data.getData());
-        }
-    }
 }

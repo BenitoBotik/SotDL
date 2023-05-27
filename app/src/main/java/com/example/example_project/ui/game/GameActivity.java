@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
-    GamePresenter presenter;
+    private GamePresenter presenter;
     private TextView idTextView;
     private ConstraintLayout gameLayout;
     private ImageView addIcon;

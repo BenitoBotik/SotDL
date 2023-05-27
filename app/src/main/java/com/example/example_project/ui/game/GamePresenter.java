@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class GamePresenter {
     private GameActivity view;
-    private FirebaseFirestore db;
     private String email;
     private String gm;
     private Game game;
