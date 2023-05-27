@@ -1,23 +1,15 @@
 package com.example.example_project.ui.model;
 
 import static android.content.ContentValues.TAG;
-import static android.provider.Settings.System.getString;
-import static androidx.core.app.ActivityCompat.requestPermissions;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
@@ -26,12 +18,10 @@ import androidx.work.WorkerParameters;
 
 import com.example.example_project.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class NotificationWorker extends Worker {
@@ -65,24 +55,25 @@ public class NotificationWorker extends Worker {
                 .addSnapshotListener(
                         new EventListener<QuerySnapshot>() {
                             @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
                                 Log.w(TAG, "Event happened!");
                                 if (error != null) {
                                     Log.w(TAG, "Listen failed.", error);
                                     return;
                                 }
 
-                                for (DocumentChange dc : value.getDocumentChanges()) {
+                                for (DocumentChange dc : snapshots.getDocumentChanges()) {
                                     switch (dc.getType()) {
                                         case ADDED:
-                                            Log.d(TAG, "New city: " + dc.getDocument().getData());
+                                            Log.d(TAG, "New game: " + dc.getDocument().getData());
                                             break;
                                         case MODIFIED:
-                                            Log.d(TAG, "Modified city: " + dc.getDocument().getData());
-                                            SendNotification();
+                                            String name = dc.getDocument().getData().get("name").toString();
+                                            Log.d(TAG, "Modified game: " + name);
+                                             SendNotification(name);
                                             break;
                                         case REMOVED:
-                                            Log.d(TAG, "Removed city: " + dc.getDocument().getData());
+                                            Log.d(TAG, "Removed game: " + dc.getDocument().getData());
                                             break;
                                         default:
                                             break;
@@ -93,7 +84,7 @@ public class NotificationWorker extends Worker {
     }
 
     @SuppressLint("MissingPermission")
-    private void SendNotification() {
+    private void SendNotification(String name) {
         Log.w(TAG, "entered SendNotification!");
 
         int notificationId = 1;
@@ -108,8 +99,8 @@ public class NotificationWorker extends Worker {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this.getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.avatar)
-                .setContentTitle("Player Joined")
-                .setContentText("a player has joined your game!")
+                .setContentTitle(name + " Has Been Updated!")
+                .setContentText("Go and check it out!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this.getApplicationContext());
@@ -117,5 +108,4 @@ public class NotificationWorker extends Worker {
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(notificationId, builder.build());
     }
-
 }
