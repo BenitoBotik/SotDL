@@ -1,6 +1,9 @@
 package com.example.example_project.ui.main_page;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.work.PeriodicWorkRequest;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.game.games_list.GamesListActivity;
 import com.example.example_project.ui.login.LoginActivity;
+import com.example.example_project.ui.model.NotificationWorker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -24,7 +30,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity {
+    private static final int NOTIFICATION_REQUEST_ID = 911;
     private MainPresenter presenter;
     private TextView welcome;
     private ImageView signOut;
@@ -46,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 presenter.LogOutClicked();
             }
         });
-
     }
 
     private void SetViews() {
@@ -79,10 +87,37 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // Check for notification permission
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            StartWorker();
+        }
+        else{
+            // ask for permission
+            String[] permissions = {android.Manifest.permission.POST_NOTIFICATIONS};
+            requestPermissions(permissions, NOTIFICATION_REQUEST_ID);
+        }
     }
 
     public void WelcomeText(FirebaseUser firebaseUser){
         welcome.setText("Welcome " + firebaseUser.getDisplayName() + "!");
         welcome.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_REQUEST_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                StartWorker();
+            }
+        }
+    }
+
+    public void StartWorker(){
+        PeriodicWorkRequest periodicWorkRequest = new
+                PeriodicWorkRequest.Builder(NotificationWorker.class, 10, TimeUnit.MINUTES)
+                .setInitialDelay(2000, TimeUnit.MILLISECONDS)
+                .build();
     }
 }
