@@ -14,7 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
@@ -115,9 +118,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void StartWorker(){
-        PeriodicWorkRequest periodicWorkRequest = new
-                PeriodicWorkRequest.Builder(NotificationWorker.class, 10, TimeUnit.MINUTES)
-                .setInitialDelay(2000, TimeUnit.MILLISECONDS)
+        WorkRequest request = new OneTimeWorkRequest.Builder(NotificationWorker.class)
                 .build();
+        WorkManager.getInstance(this).enqueue(request);
     }
 }

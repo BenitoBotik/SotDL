@@ -15,10 +15,12 @@ import androidx.work.WorkerParameters;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class NotificationWorker extends Worker {
@@ -32,6 +34,7 @@ public class NotificationWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        Log.w(TAG, "got to doWork!");
         CheckPlayers();
 
         return Result.success();
@@ -43,28 +46,36 @@ public class NotificationWorker extends Worker {
     }
 
     private void CheckPlayers() {
+        Log.w(TAG, "entered CheckPlayers!");
         db.collection("games")
                 .whereArrayContains("players", email)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "listen:error", e);
-                            return;
-                        }
+                .addSnapshotListener(
+                        new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                Log.w(TAG, "Event happened!");
+                                if (error != null) {
+                                    Log.w(TAG, "Listen failed.", error);
+                                    return;
+                                }
 
-                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case MODIFIED:
-                                    Log.d(TAG, "Modified game: " + dc.getDocument().getData());
-                                    SendNotification();
-                                    break;
+                                for (DocumentChange dc : value.getDocumentChanges()) {
+                                    switch (dc.getType()) {
+                                        case ADDED:
+                                            Log.d(TAG, "New city: " + dc.getDocument().getData());
+                                            break;
+                                        case MODIFIED:
+                                            Log.d(TAG, "Modified city: " + dc.getDocument().getData());
+                                            break;
+                                        case REMOVED:
+                                            Log.d(TAG, "Removed city: " + dc.getDocument().getData());
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                             }
-                        }
-
-                    }
-                });
+                        });
     }
 
     private void SendNotification() {
