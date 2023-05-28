@@ -32,10 +32,6 @@ public class Game implements Serializable {
         return gm;
     }
 
-    public String getMap() {
-        return map;
-    }
-
     public ArrayList<String> getPlayers() {
         return players;
     }
