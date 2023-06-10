@@ -19,6 +19,10 @@ import android.widget.ImageView;
 
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class CharacterCreationActivity extends AppCompatActivity {
     private CharacterCreationPresenter presenter;
@@ -30,6 +34,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_will;
     private ImageView characterImage;
     private int icon;
+
+    private Uri imageUri;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
@@ -105,7 +111,14 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String intellect = editText_intellect.getText().toString();
         String will = editText_will.getText().toString();
 
-        presenter.SaveButtonClicked(name, level, icon, strength, agility, intellect, will);
+        presenter.SaveButtonClicked(name, level, icon, imageUri, strength, agility, intellect, will);
+
+        // sleep for 1 second to allow the image to upload
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
         startActivity(intent);
@@ -121,9 +134,9 @@ public class CharacterCreationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
+            this.imageUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), this.imageUri);
                 characterImage.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();

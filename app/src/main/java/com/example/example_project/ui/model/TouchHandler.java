@@ -12,9 +12,9 @@ import com.example.example_project.R;
 
 public class TouchHandler implements View.OnTouchListener {
     private float dX, dY;
-    private ConstraintLayout layout;
-    private ImageView icon;
-    private ImageView bucket;
+    private final ConstraintLayout layout;
+    private final ImageView icon;
+    private final ImageView bucket;
 
     public TouchHandler(ConstraintLayout layout, ImageView icon, ImageView bucket) {
         this.layout = layout;

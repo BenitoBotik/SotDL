@@ -28,11 +28,11 @@ import java.util.List;
 import java.util.Map;
 
 public class GameListPresenter implements Repository.LoadGamesListener {
-    private GamesListActivity view;
+    private final GamesListActivity view;
     private List<Game> games = new ArrayList<>();
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db;
-    private String email;
+    private final FirebaseAuth firebaseAuth;
+    private final FirebaseFirestore db;
+    private final String email;
 
     public GameListPresenter(GamesListActivity view) {
         this.view = view;

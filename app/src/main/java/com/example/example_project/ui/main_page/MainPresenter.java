@@ -22,9 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 public class MainPresenter {
-    private MainActivity view;
-    private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
+    private final MainActivity view;
+    private final FirebaseAuth firebaseAuth;
+    private final GoogleSignInClient googleSignInClient;
 
     public MainPresenter(MainActivity view) {
         this.view = view;

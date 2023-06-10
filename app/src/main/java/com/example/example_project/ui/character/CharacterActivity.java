@@ -3,6 +3,8 @@ package com.example.example_project.ui.character;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import com.example.example_project.R;
 import com.example.example_project.ui.character.character_list.CharactersListActivity;
 import com.example.example_project.ui.model.Character;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class CharacterActivity extends AppCompatActivity {
     private CharacterPresenter presenter;
@@ -53,6 +57,13 @@ public class CharacterActivity extends AppCompatActivity {
         agilityTextView.setText(String.valueOf(character.getAgility()));
         intellectTextView.setText(String.valueOf(character.getIntellect()));
         willTextView.setText(String.valueOf(character.getWill()));
-        characterImageView.setImageResource(character.getIcon());
+
+        // download image from url and create a bitmap
+        StorageReference filestore = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = filestore.child("icons/"+character.getId());
+        fileRef.getBytes(1024*1024).addOnSuccessListener(bytes -> {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            characterImageView.setImageBitmap(bitmap);
+        });
     }
 }

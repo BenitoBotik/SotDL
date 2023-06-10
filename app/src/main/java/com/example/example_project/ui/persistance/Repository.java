@@ -2,6 +2,7 @@ package com.example.example_project.ui.persistance;
 
 import static android.content.ContentValues.TAG;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.example_project.ui.model.Character;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,24 @@ public class Repository {
             instance = new Repository();
         }
         return instance;
+    }
+
+    private void uploadImage(Uri imageUri, String characterId) {
+        // upload image to file storage named after character name
+        StorageReference filestore = FirebaseStorage.getInstance().getReference().child("icons").child(characterId);
+        filestore.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                // get image url
+                filestore.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d(MotionEffect.TAG, "Uploaded image for character: " + uri.toString());
+                    }
+                });
+            }
+        });
     }
 
     public interface LoadCharactersListener {
@@ -71,13 +93,18 @@ public class Repository {
                 });
     }
 
-    public void AddCharacter(Character character) {
+    public void AddCharacter(Character character, Uri imageUri) {
         db.collection("characters")
                 .add(character)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        String id = documentReference.getId();
+                        character.setId(id);
+                        if (imageUri != null) {
+                            uploadImage(imageUri, id);
+                        }
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + id);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

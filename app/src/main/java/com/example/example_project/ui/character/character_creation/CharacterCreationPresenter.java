@@ -2,6 +2,7 @@ package com.example.example_project.ui.character.character_creation;
 
 import static android.content.ContentValues.TAG;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterCreationPresenter {
-    private CharacterCreationActivity view;
-    private String email;
+    private final CharacterCreationActivity view;
+    private final String email;
 
     public CharacterCreationPresenter(CharacterCreationActivity view) {
         this.view = view;
@@ -30,11 +31,10 @@ public class CharacterCreationPresenter {
         this.email = firebaseUser.getEmail();
     }
 
-    public void SaveButtonClicked(String name, String level, int icon, String strength, String agility, String intellect, String will){
+    public void SaveButtonClicked(String name, String level, int icon, Uri imageUri, String strength, String agility, String intellect, String will){
+        Repository repository = Repository.getInstance();
         // Create a new character
         Character character = new Character(name, level, icon, strength, agility, intellect, will, this.email);
-
-        // Add a new document with a generated ID
-        Repository.getInstance().AddCharacter(character);
+        repository.AddCharacter(character, imageUri);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.example_project.ui.character.character_list;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.model.Character;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -38,7 +42,14 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         Character currentCharacter = characters.get(position);
         holder.nameTextView.setText(currentCharacter.getName());
         holder.levelTextView.setText(currentCharacter.getLevel());
-        holder.iconImageView.setImageResource(currentCharacter.getIcon());
+
+        // download image from url and create a bitmap
+        StorageReference filestore = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = filestore.child("icons/"+currentCharacter.getId());
+        fileRef.getBytes(1024*1024).addOnSuccessListener(bytes -> {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            holder.iconImageView.setImageBitmap(bitmap);
+        });
     }
 
     @Override

@@ -14,8 +14,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CharacterPresenter {
-    private CharacterActivity view;
-    private Character character;
+    private final CharacterActivity view;
+    private final Character character;
 
     public CharacterPresenter(CharacterActivity view) {
         this.view = view;

@@ -23,10 +23,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginPresenter {
-    private LoginActivity view;
-    private GoogleSignInClient googleSignInClient;
-    private FirebaseAuth firebaseAuth;
-    private SignInButton btSignIn;
+    private final LoginActivity view;
+    private final GoogleSignInClient googleSignInClient;
+    private final FirebaseAuth firebaseAuth;
+    private final SignInButton btSignIn;
 
     public LoginPresenter(LoginActivity view) {
         this.view = view;

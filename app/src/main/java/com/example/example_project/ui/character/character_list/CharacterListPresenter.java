@@ -19,10 +19,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterListPresenter implements Repository.LoadCharactersListener{
-    private CharactersListActivity view;
-    private FirebaseAuth firebaseAuth;
+public class CharacterListPresenter implements Repository.LoadCharactersListener {
+    private final CharactersListActivity view;
+    private final FirebaseAuth firebaseAuth;
     private List<Character> characters = new ArrayList<>();
+
     public CharacterListPresenter(CharactersListActivity view) {
         this.view = view;
 
@@ -41,7 +42,8 @@ public class CharacterListPresenter implements Repository.LoadCharactersListener
         Repository.getInstance().setCharactersListener(this);
         Repository.getInstance().GetCharacters(email);
     }
-    public void CharacterClicked(int position){
+
+    public void CharacterClicked(int position) {
         Character character = characters.get(position);
         Intent intent = new Intent(view, CharacterActivity.class);
         intent.putExtra("selected_character", character);

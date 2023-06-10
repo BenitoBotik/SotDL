@@ -26,10 +26,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class GamePresenter {
-    private GameActivity view;
-    private String email;
-    private String gm;
-    private Game game;
+    private final GameActivity view;
+    private final String email;
+    private final String gm;
+    private final Game game;
 
     public GamePresenter(GameActivity view) {
         this.view = view;
