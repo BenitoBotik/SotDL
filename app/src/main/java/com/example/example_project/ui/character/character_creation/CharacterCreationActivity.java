@@ -3,9 +3,13 @@ package com.example.example_project.ui.character.character_creation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +47,30 @@ public class CharacterCreationActivity extends AppCompatActivity {
         editText_will = findViewById(R.id.editText_will);
         characterImage = findViewById(R.id.character_icon_imageview);
         icon = R.drawable.icon0;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String savedText = sharedPreferences.getString("textKey", "");
+        editText_name.setText(savedText);
+
+        editText_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Not needed for this example
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Not needed for this example
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editText_name.getText().toString();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("textKey", text);
+                editor.apply();
+            }
+        });
     }
 
     public void changeCharacterIcon(View view) {
