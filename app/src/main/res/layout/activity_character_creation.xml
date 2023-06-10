@@ -31,7 +31,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon0"
-        android:onClick="changeCharacterIcon"/>
+        android:onClick="changeCharacterIcon"
+        android:background="@drawable/circle_background"
+        android:scaleType="centerCrop"/>
 
     <EditText
         android:id="@+id/editText_strength"
