@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon0"
+        app:srcCompat="@drawable/user"
         android:onClick="changeCharacterIcon"
         android:background="@drawable/circle_background"
         android:scaleType="centerCrop"/>
