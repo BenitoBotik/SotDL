@@ -2,9 +2,11 @@ package com.example.example_project.ui.game;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 
 import com.example.example_project.R;
 import com.example.example_project.ui.model.Game;
@@ -30,6 +33,7 @@ public class GamePresenter {
     private final String email;
     private final String gm;
     private final Game game;
+    private int icon;
 
     public GamePresenter(GameActivity view) {
         this.view = view;
@@ -81,7 +85,23 @@ public class GamePresenter {
     public void AddButtonClicked(ConstraintLayout gameLayout, ImageView bucket){
         // create a new game icon of size 64x64
         ImageView currentIcon = new ImageView(view);
-        currentIcon.setImageResource(R.drawable.avatar);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view);
+        builder.setTitle("Choose an icon");
+
+        final int[] iconIds = {R.drawable.icon0, R.drawable.icon1, R.drawable.icon2, R.drawable.icon3, R.drawable.icon4, R.drawable.icon5};
+        CharSequence[] iconNames = {"Clockwork", "Dwarf", "Changeling", "Human", "Goblin", "Orc"};
+
+        builder.setItems(iconNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                currentIcon.setImageResource(iconIds[which]);
+                icon = iconIds[which];
+            }
+        });
+
+        builder.show();
+
         currentIcon.setLayoutParams(new ViewGroup.LayoutParams(64, 64));
 
         // Set the ImageView's id
@@ -101,7 +121,7 @@ public class GamePresenter {
         currentIcon.setOnTouchListener(new TouchHandler(view.findViewById(R.id.my_parent_layout), currentIcon, bucket));
     }
 
-    public void UpdateButtonClicked(){
+    public void UpdateButtonClicked() {
         // Get the parent layout
         ConstraintLayout parentLayout = view.findViewById(R.id.my_parent_layout);
 
@@ -129,19 +149,64 @@ public class GamePresenter {
             float x = childView.getX();
             float y = childView.getY();
 
-            // Create an icon and add it to the list
-            Icon icon = new Icon("avatar", x, y);
-            newIcons.add(icon);
+            //check if the view is an imageview
+            if (childView instanceof ImageView) {
+                // Get the image resource id
+                ImageView imageView = (ImageView) childView;
+
+                if (imageView.getDrawable() != null) {
+                    if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon0).getConstantState())) {
+                        // The ImageView is displaying image1
+                        // Perform your desired actions for image1
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon0", x, y);
+                        newIcons.add(icon);
+                    } else if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon1).getConstantState())) {
+                        // The ImageView is displaying image2
+                        // Perform your desired actions for image2
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon1", x, y);
+                        newIcons.add(icon);
+                    } else if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon2).getConstantState())) {
+                        // The ImageView is displaying image2
+                        // Perform your desired actions for image2
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon2", x, y);
+                        newIcons.add(icon);
+                    }
+                    else if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon3).getConstantState())) {
+                        // The ImageView is displaying image2
+                        // Perform your desired actions for image2
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon3", x, y);
+                        newIcons.add(icon);
+                    }
+                    else if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon4).getConstantState())) {
+                        // The ImageView is displaying image2
+                        // Perform your desired actions for image2
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon4", x, y);
+                        newIcons.add(icon);
+                    }
+                    else if (imageView.getDrawable().getConstantState().equals(ContextCompat.getDrawable(view, R.drawable.icon5).getConstantState())) {
+                        // The ImageView is displaying image2
+                        // Perform your desired actions for image2
+                        // Create an icon and add it to the list
+                        Icon icon = new Icon("icon5", x, y);
+                        newIcons.add(icon);
+                    }
+                }
+            }
+
+            // update game icons
+            game.setIcons(newIcons);
+
+            // update the game in the database
+            Repository.getInstance().UpdateGame(game);
         }
-
-        // update game icons
-        game.setIcons(newIcons);
-
-        // update the game in the database
-        Repository.getInstance().UpdateGame(game);
     }
 
-    public void CopyToClipboard(Context context) {
+    public void CopyToClipboard (Context context){
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("Copied Code", game.getId());
         clipboardManager.setPrimaryClip(clipData);
