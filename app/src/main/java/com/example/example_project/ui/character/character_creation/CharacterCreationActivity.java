@@ -34,8 +34,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private EditText editText_will;
     private ImageView characterImage;
     private int icon;
-
     private Uri imageUri;
+    private boolean buttonClicked = false;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
@@ -104,24 +104,27 @@ public class CharacterCreationActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        String name = editText_name.getText().toString();
-        String level = editText_level.getText().toString();
-        String strength = editText_strength.getText().toString();
-        String agility = editText_agility.getText().toString();
-        String intellect = editText_intellect.getText().toString();
-        String will = editText_will.getText().toString();
+        if (!buttonClicked) {
+            buttonClicked = true;
+            String name = editText_name.getText().toString();
+            String level = editText_level.getText().toString();
+            String strength = editText_strength.getText().toString();
+            String agility = editText_agility.getText().toString();
+            String intellect = editText_intellect.getText().toString();
+            String will = editText_will.getText().toString();
 
-        presenter.SaveButtonClicked(name, level, icon, imageUri, strength, agility, intellect, will);
+            presenter.SaveButtonClicked(name, level, icon, imageUri, strength, agility, intellect, will);
 
-        // sleep for 1 second to allow the image to upload
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            // sleep for 1 second to allow the image to upload
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
+            startActivity(intent);
         }
-
-        Intent intent = new Intent(CharacterCreationActivity.this, CharactersListActivity.class);
-        startActivity(intent);
     }
 
     private void openGallery() {
